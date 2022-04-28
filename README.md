@@ -1,5 +1,7 @@
 EXAMPLE USAGE OF YoloDetector AND EuclidianTracker CLASSES
 
+```
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
@@ -15,6 +17,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+
     YoloDetector detector;
     detector.LoadNet("res/bestCUDA.onnx", true);
 
@@ -78,3 +81,5 @@ int main(int argc, char** argv)
 
     return 0;
 }
+
+```
