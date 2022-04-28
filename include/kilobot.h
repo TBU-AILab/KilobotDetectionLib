@@ -1,5 +1,13 @@
 #pragma once
 
+/*****************************************************************//**
+ * @file   kilobot.h
+ * @brief  Struct Kilobot
+ *
+ * @author Petr Svoboda
+ * @date   April 2022
+***********************************************************************/
+
 #include "opencv2/opencv.hpp"
 
 using namespace cv;
@@ -8,13 +16,13 @@ namespace kilolib {
 
     struct Kilobot
     {
-        float confidence; // "míra jistoty" detekce z neuronové sítì
-        Rect box; // ohranièení kilobota
-        int id; // id konkrétního kilobota
-        int undetected; // poèet snímkù na kterých nebyl detekován
-        std::vector<Point> led; // støed detekované LED
-        std::vector<Point> trajectory; // zaznamenaná trajektorie
-        Scalar color; // barva pro vykreslení
-        Scalar LEDcolor; // barva pro vykreslení
+        float confidence; /*!< confidence of Kilobot detection */
+        Rect box; /*!< rect containing bounding box */
+        int id; /*!< Kilobot id */
+        int undetected; /*!< number of frames where Kilobot wasn't detected */ 
+        std::vector<Point> led; /*!< vector with detected LED centers */
+        std::vector<Point> trajectory; /*!< vector containing trajectory */
+        Scalar color; /*!< Kilobot color */
+        Scalar LEDcolor; /*!< LED color */
     };
 }

@@ -8,12 +8,13 @@ namespace kilolib {
 
     YoloDetector::YoloDetector()
     {
-
     }
 
     void YoloDetector::LoadNet(string pathToFile, bool is_cuda)
     {
+        // naète model neuronové sítì
         _net = cv::dnn::readNet(pathToFile);
+
         if (is_cuda)
         {
             std::cout << "Running with CUDA\n";
@@ -28,7 +29,7 @@ namespace kilolib {
         }
     }
 
-    void YoloDetector::Detect(cv::Mat& image, std::vector<Kilobot>& output, float score, float conf, float nms)
+    void YoloDetector::Detect(cv::Mat& frame, std::vector<Kilobot>& output, float score, float conf, float nms)
     {
         if (_net.empty()) {
             std::cout << "There is no Net available for detection!\n";
@@ -37,8 +38,9 @@ namespace kilolib {
 
         cv::Mat blob;
 
-        auto input_image = _format(image);
+        auto input_image = _format(frame);
 
+        // create BLOB, set it as Net input and try to find Kilobots
         cv::dnn::blobFromImage(input_image, blob, 1. / 255., cv::Size(INPUT_WIDTH, INPUT_HEIGHT), cv::Scalar(), true, false);
         _net.setInput(blob);
 
@@ -47,19 +49,20 @@ namespace kilolib {
         float x_factor = input_image.cols / INPUT_WIDTH;
         float y_factor = input_image.rows / INPUT_HEIGHT;
 
+        // get output from Net
         float* data = (float*)_outputs[0].data;
 
         // [0, 1,   2,      3,        4,       5]
         // [x, y, width, height, confidence, score]
         const int dimensions = 6;
 
-        // poèet výstupù z neuronové sítì
+        // number of outputs for Net trained on 640x640 px
         const int rows = 25200;
 
-        //std::vector<int> class_ids;
         std::vector<float> confidences;
         std::vector<cv::Rect> boxes;
 
+        // filter outputs and get only results where Net was confident
         for (int r = 0; r < rows; ++r) {
             if (data[4] >= conf) { // data[4] == confidence
                 if (data[5] > score) { // data[5] == kilobot score
@@ -78,9 +81,11 @@ namespace kilolib {
                 }
             }
 
+            // move to next output
             data += dimensions;
         }
 
+        // apply Non maximum suppression and reduce number of multiply detected objets 
         std::vector<int> nms_result;
         cv::dnn::NMSBoxes(boxes, confidences, score, nms, nms_result);
 
