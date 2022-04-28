@@ -22,8 +22,7 @@ int main(int argc, char** argv)
     detector.LoadNet("res/bestCUDA.onnx", true);
 
     cv::VideoCapture capture("res/kamera1.mp4");
-    capture.set(cv::CAP_PROP_FRAME_WIDTH, INPUT_WIDTH);
-    capture.set(cv::CAP_PROP_FRAME_HEIGHT, INPUT_HEIGHT);
+    
     if (!capture.isOpened())
     {
         std::cerr << "Error opening video file\n";
