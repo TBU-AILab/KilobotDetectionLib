@@ -1,3 +1,12 @@
+/*****************************************************************//**
+ * @file   detector_and_tracker_example.cpp
+ * @brief  Example that detects Kilobots in video file and then tracks them.
+ *         Displays IDs of detected Kilobots.
+ *
+ * @author Petr Svoboda
+ * @date   May 2022
+***********************************************************************/
+
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 
@@ -12,9 +21,11 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+    // Creates YOLO detector and loads DNN model "best.onnx"
     YoloDetector detector;
     detector.LoadNet("best.onnx", true);
 
+    // Open video "bodyguard.mp4"
     cv::VideoCapture capture("bodyguard.mp4");
 
     if (!capture.isOpened())
@@ -23,19 +34,22 @@ int main(int argc, char** argv)
         return -1;
     }
 
+    // default values 
     int nms = 0;
     int score = 5;
     int conf = 5;
     int t = 200;
     int per = 50;
 
-    namedWindow("Controls", WINDOW_AUTOSIZE); //create a window called "Controls"
+    //create a window called "Controls" with trackbars
+    namedWindow("Controls", WINDOW_AUTOSIZE); 
     createTrackbar("NMS", "Controls", &nms, 10);
     createTrackbar("Score", "Controls", &score, 10);
     createTrackbar("Confidence", "Controls", &conf, 10);
     createTrackbar("Threshold", "Controls", &t, 255);
     createTrackbar("Percentage", "Controls", &per, 50);
 
+    // vectors, where detections on current and previous frame will be stored
     std::vector<Kilobot> output;
     std::vector<Kilobot> prevOutput;
 
@@ -45,6 +59,7 @@ int main(int argc, char** argv)
 
     while (true)
     {
+        // read frame
         capture.read(frame);
 
         if (frame.empty())
@@ -53,10 +68,13 @@ int main(int argc, char** argv)
             break;
         }
 
+        // detect Kilobots
         detector.Detect(frame, output, (float)(nms + 1) / 10, (float)(conf + 1) / 10, (float)(score + 1) / 10);
 
+        // track Kilobots
         tracker.Track(frame, output, prevOutput, (double)t + 1, per / 10);
 
+        // show output
         imshow("output", frame);
 
         if (cv::waitKey(1) != -1)
@@ -66,7 +84,9 @@ int main(int argc, char** argv)
             break;
         }
 
+        // set current detections to prevOutput for calculations on next frame
         prevOutput = output;
+        // clear current detections
         output.clear();
     }
 
