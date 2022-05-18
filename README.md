@@ -1,5 +1,7 @@
 # KILOLIB library
 
+Library containing basic functions and classes for Kilobot detection and tracking, camera calibration and distance measuring.
+
 **include** - contains library header files
 
 **src** - contains library source code files
