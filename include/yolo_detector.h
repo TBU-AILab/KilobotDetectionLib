@@ -4,7 +4,7 @@
  * @file   yolo_detector.h
  * @brief  Class used for Kilobot detection. It uses YOLOV5 model from https://github.com/ultralytics/yolov5.
  *         You should be able to use different models, but this feature isn't tested.
- *         
+ *
  * @author Petr Svoboda
  * @date   April 2022
 ***********************************************************************/
@@ -31,7 +31,7 @@ namespace kilolib {
 
         /**
          * @brief Loads model from path and determinates running on CPU or GPU.
-         * 
+         *
          * @param pathToFile Relative path to file with pretrained YOLOV5 model.
          * @param is_cuda If true, function tries to run Net with CUDA backend.
         */
@@ -39,7 +39,7 @@ namespace kilolib {
 
         /**
          * @brief Method used for Kilobot detection in frame.
-         * 
+         *
          * @param frame Frame used for detection.
          * @param output Vector in which detections will be stored.
          * @param scoreVal Minimum value for kilobot score. Values greater than this are considered to be Kilobots.

@@ -24,7 +24,7 @@ namespace kilolib {
     public:
         /**
          * @brief A Constructor
-         * 
+         *
          * @param lastId Number (ID) of the first tracked Kilobot. Will be incremented for other tracked Kilobots.
          * @param maxDist Maximum distance that Kilobot can move between two frames.
          * @param maxUndetected Maximum number of frames, where Kilobot wasn't detected.
@@ -32,9 +32,9 @@ namespace kilolib {
         EuclidianTracker(int lastId = defId, int maxDist = defDist, int maxUndetected = defUndetected);
 
         /**
-         * @brief Resets all parameters to new values and CLEARS _prevUndetected vector. 
+         * @brief Resets all parameters to new values and CLEARS _prevUndetected vector.
          * After this function is called tracking starts from the beginning .
-         * 
+         *
          * @param lastId Number (ID) of the first tracked Kilobot. Will be incremented for other tracked Kilobots.
          * @param maxDist Maximum distance that Kilobot can move between two frames.
          * @param maxUndetected Maximum number of frames, where Kilobot wasn't detected.
@@ -42,22 +42,22 @@ namespace kilolib {
         void Reset(int lastId = defId, int maxDist = defDist, int maxUndetected = defUndetected);
 
         /**
-         * @brief Function that tracks Kilobots in current and previous frame. 
+         * @brief Function that tracks Kilobots in current and previous frame.
          * It assigns IDs to newly detected Kilobots and tracks them with detections from previous frame.
-         * 
+         *
          * @param frame Current frame.
          * @param output Current detected Kilobots.
          * @param prevOutput Kilobots detected in the previous frame.
          * @param LEDthreshVal Threshold value for LED detection.
          * @param LEDPercentageVal Percentage value of minimum area that detected LED has to occupy.
         */
-        void Track(Mat frame, std::vector<Kilobot>& output, std::vector<Kilobot>& prevOutput, 
+        void Track(Mat frame, std::vector<Kilobot>& output, std::vector<Kilobot>& prevOutput,
             double LEDthreshVal, double LEDPercentageVal);
 
-    private: 
+    private:
         /**
          * @brief Private function which looks for specific Kilobot in vector containing detections.
-         * 
+         *
          * @param frame Current frame.
          * @param obj Specific Kilobot.
          * @param objects Vector of Kilobots to look.
@@ -66,7 +66,7 @@ namespace kilolib {
         */
         void _findObject(Mat& frame, Kilobot& obj, std::vector<Kilobot>& objects, double LEDthreshVal, double LEDPercentageVal);
 
-    private: 
+    private:
 
         int _maxDist; /*!< Maximum distance that Kilobot can move between two frames. */
         int _maxUndetected;/*!< Maximum number of frames on which Kilobot wasn't detected. */

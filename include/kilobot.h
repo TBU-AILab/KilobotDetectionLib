@@ -19,7 +19,7 @@ namespace kilolib {
         float confidence; /*!< confidence of Kilobot detection */
         Rect box; /*!< rect containing bounding box */
         int id; /*!< Kilobot id */
-        int undetected; /*!< number of frames where Kilobot wasn't detected */ 
+        int undetected; /*!< number of frames where Kilobot wasn't detected */
         std::vector<Point> led; /*!< vector with detected LED centers */
         std::vector<Point> trajectory; /*!< vector containing trajectory */
         Scalar color; /*!< Kilobot color */

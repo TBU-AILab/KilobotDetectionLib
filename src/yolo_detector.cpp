@@ -2,8 +2,6 @@
 
 #include <random>
 
-using namespace cv;
-
 namespace kilolib {
 
     YoloDetector::YoloDetector()

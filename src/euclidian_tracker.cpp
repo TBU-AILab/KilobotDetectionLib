@@ -1,7 +1,5 @@
 #include "euclidian_tracker.h"
 
-//using namespace cv;
-
 #include "kilolib_functions.h"
 
 namespace kilolib {
@@ -70,7 +68,7 @@ namespace kilolib {
         _prevUndetected.clear();
     }
 
-    void EuclidianTracker::_findObject(Mat& frame, Kilobot& obj, std::vector<Kilobot>& objects, double LEDthreshVal, double LEDPercentageVal) { 
+    void EuclidianTracker::_findObject(Mat& frame, Kilobot& obj, std::vector<Kilobot>& objects, double LEDthreshVal, double LEDPercentageVal) {
         Rect box = obj.box;
 
         // determinate center of Kilobots bounding box

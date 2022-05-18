@@ -1,6 +1,6 @@
 #include "kilolib_functions.h"
 
-namespace kilolib{
+namespace kilolib {
 
     Point findLED(Mat frame, Rect box, double thresh, double minArea)
     {
@@ -100,6 +100,55 @@ namespace kilolib{
         }
 
         return distance;
+    }
+
+    void centerKilobotDetection(Mat& frame, string imgPath, int percentage, int thresh, bool measureDist) {
+        Mat original = imread(imgPath);
+
+        frame = Mat(original.rows, original.cols, original.type(), Scalar(255, 255, 255));
+
+        int w = original.size().width / 100 * percentage;
+        int h = original.size().height / 100 * percentage;
+
+        int tx = original.size().width / 2 - w / 2;
+        int ty = original.size().height / 2 - h / 2;
+
+        Rect r = Rect(tx, ty, w, h);
+
+        original(r).copyTo(frame(r));
+
+        Mat gray;
+        cvtColor(frame, gray, COLOR_BGR2GRAY);
+
+        // apply thresholding - remove non-bright colors
+        Mat th;
+        threshold(gray, th, thresh, 255, THRESH_BINARY_INV);
+
+        // find biggest contour - biggest bright space
+        vector<vector<Point>> contours;
+        findContours(th, contours, RETR_TREE, CHAIN_APPROX_SIMPLE);
+
+        int biggestSize = -1;
+        Rect biggestBox;
+
+        for (int c = 0; c < contours.size(); c++) {
+            Rect cBox = boundingRect(contours[c]);
+
+            double area = (double)cBox.width * (double)cBox.height;
+
+            if (area > biggestSize) {
+                biggestSize = area;
+                biggestBox = cBox;
+            }
+        }
+
+
+        if (biggestSize != -1) {
+            rectangle(frame, biggestBox, Scalar(0, 255, 0));
+
+            if (measureDist)
+                measureDistance(biggestBox, frame, true, Scalar(255, 0, 255));
+        }
     }
 
 }
