@@ -6,13 +6,11 @@ using namespace kilolib;
 
 int main()
 {
-    // Creating vector to store vectors of 3D points for each checkerboard image
     vector<vector<Point3f>> objpoints;
 
-    // Creating vector to store vectors of 2D points for each checkerboard image
     vector<vector<Point2f>> imgpoints;
 
-    cv::Mat cameraMatrix, distCoeffs, R, T;
+    cv::Mat cameraMatrix, distCoeffs;
 
     Mat original;
     Mat un;
