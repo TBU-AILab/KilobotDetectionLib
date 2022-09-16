@@ -10,7 +10,7 @@ namespace kilolib {
 
     void YoloDetector::LoadNet(string pathToFile, bool is_cuda)
     {
-        // naète model neuronové sítì
+        // na?te model neuronov? s?t?
         _net = cv::dnn::readNet(pathToFile);
 
         if (is_cuda)
