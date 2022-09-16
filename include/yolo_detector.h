@@ -22,6 +22,16 @@ static const float INPUT_HEIGHT = 640.0;
 
 namespace kilolib {
 
+    /**
+     * @brief Result data type for functions from YoloDetector class
+     */
+    enum class YD_RESULT {
+        YD_OK,          /**< correct function execution */
+        YD_ARGS_ERROR,  /**< unexpected or incorrect input parameters */
+        YD_ERROR        /**< unspecified error */
+    };
+
+
     class YoloDetector {
     public:
         /**
@@ -34,8 +44,10 @@ namespace kilolib {
          *
          * @param pathToFile Relative path to file with pretrained YOLOV5 model.
          * @param is_cuda If true, function tries to run Net with CUDA backend.
+         *
+         * @result Result information @sa YD_RESULT
         */
-        void LoadNet(string pathToFile, bool is_cuda);
+        YD_RESULT LoadNet(string pathToFile, bool is_cuda);
 
         /**
          * @brief Method used for Kilobot detection in frame.
@@ -45,10 +57,18 @@ namespace kilolib {
          * @param scoreVal Minimum value for kilobot score. Values greater than this are considered to be Kilobots.
          * @param confVal Minimum value for confidence used by Net. Values greater than this are considered to be objects.
          * @param nmsVal Value usedfor non-maximum suppression.
+         *
+         * @result Result information @sa YD_RESULT
         */
-        void Detect(cv::Mat& frame, std::vector<Kilobot>& output, float scoreVal, float confVal, float nmsVal);
+        YD_RESULT Detect(cv::Mat& frame, std::vector<Kilobot>& output, float scoreVal, float confVal, float nmsVal);
 
     private:
+
+        /**
+         * @brief Expand the source image to a square image, where the bigger dimension is used.
+         * @param source Source image
+         * @return Extended image
+         */
         cv::Mat _format(const cv::Mat& source);
 
     private:

@@ -8,30 +8,46 @@ namespace kilolib {
     {
     }
 
-    void YoloDetector::LoadNet(string pathToFile, bool is_cuda)
+    YD_RESULT YoloDetector::LoadNet(string pathToFile, bool is_cuda)
     {
-        // na?te model neuronov? s?t?
+        if (pathToFile.empty()){
+            return YD_RESULT::YD_ARGS_ERROR;
+        }
+
+        // loads a neural network from provided file
         _net = cv::dnn::readNet(pathToFile);
+
+        if (_net.empty()){
+            return YD_RESULT::YD_ERROR;
+        }
 
         if (is_cuda)
         {
+#ifdef ENABLE_DEBUG
             std::cout << "Running with CUDA\n";
+#endif
             _net.setPreferableBackend(cv::dnn::DNN_BACKEND_CUDA);
             _net.setPreferableTarget(cv::dnn::DNN_TARGET_CUDA_FP16);
         }
         else
         {
+#ifdef ENABLE_DEBUG
             std::cout << "Running on CPU\n";
+#endif
             _net.setPreferableBackend(cv::dnn::DNN_BACKEND_OPENCV);
             _net.setPreferableTarget(cv::dnn::DNN_TARGET_CPU);
         }
+
+        return YD_RESULT::YD_OK;
     }
 
-    void YoloDetector::Detect(cv::Mat& frame, std::vector<Kilobot>& output, float score, float conf, float nms)
+    YD_RESULT YoloDetector::Detect(cv::Mat& frame, std::vector<Kilobot>& output, float score, float conf, float nms)
     {
         if (_net.empty()) {
+#ifdef ENABLE_DEBUG
             std::cout << "There is no Net available for detection!\n";
-            return;
+#endif
+            return YD_RESULT::YD_ERROR;
         }
 
         cv::Mat blob;
@@ -104,6 +120,7 @@ namespace kilolib {
 
             output.push_back(result);
         }
+        return YD_RESULT::YD_OK;
     }
 
     cv::Mat YoloDetector::_format(const cv::Mat& source)
