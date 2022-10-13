@@ -29,7 +29,7 @@ namespace kilolib {
          * @param maxDist Maximum distance that Kilobot can move between two frames.
          * @param maxUndetected Maximum number of frames, where Kilobot wasn't detected.
         */
-        EuclidianTracker(int lastId = defId, int maxDist = defDist, int maxUndetected = defUndetected);
+        explicit EuclidianTracker(int lastId = defId, int maxDist = defDist, int maxUndetected = defUndetected);
 
         /**
          * @brief Resets all parameters to new values and CLEARS _prevUndetected vector.

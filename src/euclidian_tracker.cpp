@@ -11,25 +11,22 @@ namespace kilolib {
     void EuclidianTracker::Track(Mat frame, std::vector<Kilobot>& output, std::vector<Kilobot>& prevOutput, double LEDthreshVal, double LEDPercentageVal)
     {
         std::vector<Kilobot> undetected;
-
         // check every single Kilobot in vector of Kilobots found in current frame
-        for (int o = 0; o < output.size(); ++o)
-        {
-            auto detection = output[o];
-
-            auto box = detection.box;
+        for (auto &kilobot: output) {
+            //auto detection = output[o];
+            auto box = kilobot.box;
 
             // try to identify Kilobot in last detections
-            _findObject(frame, output[o], prevOutput, LEDthreshVal, LEDPercentageVal);
+            _findObject(frame, kilobot, prevOutput, LEDthreshVal, LEDPercentageVal);
 
             // if Kilobot wasn't found in previous detections
-            if (output[o].id == -1) {
+            if (kilobot.id == -1) {
                 // check all Kilobots that weren't detected in previous iterations
-                _findObject(frame, output[o], _prevUndetected, LEDthreshVal, LEDPercentageVal);
+                _findObject(frame, kilobot, _prevUndetected, LEDthreshVal, LEDPercentageVal);
 
                 // if even than Kilobot wasn't found, generate new ID and assign it to Kilobot
-                if (output[o].id == -1) {
-                    output[o].id = _lastId;
+                if (kilobot.id == -1) {
+                    kilobot.id = _lastId;
                     _lastId++;
                 }
             }

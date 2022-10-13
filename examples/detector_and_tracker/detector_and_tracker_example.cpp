@@ -14,6 +14,7 @@
 #include "euclidian_tracker.h"
 #include "yolo_detector.h"
 #include "kilolib_functions.h"
+#include "simpletracker.h"
 
 using namespace kilolib;
 using namespace cv;
@@ -59,28 +60,30 @@ int main(int argc, char** argv)
 
     EuclidianTracker tracker;
 
-    while (true)
-    {
+    SimpleTracker tr;
+
+    while (true) {
         // read frame
         capture.read(frame);
 
-        if (frame.empty())
-        {
+        if (frame.empty()) {
             std::cout << "End of stream\n";
             break;
         }
 
         // detect Kilobots
-        detector.Detect(frame, output, (float)(nms + 1) / 10, (float)(conf + 1) / 10, (float)(score + 1) / 10);
+        detector.Detect(frame, output, (float) (nms + 1) / 10, (float) (conf + 1) / 10, (float) (score + 1) / 10);
+
 
         // track Kilobots
-        tracker.Track(frame, output, prevOutput, (double)t + 1, per / 10);
+        tracker.Track(frame, output, prevOutput, (double) t + 1, per / 10);
 
+        tr.processKilobots(output);
+        tr.drawKilobots(frame);
         // show output
         imshow("output", frame);
 
-        if (cv::waitKey(1) != -1)
-        {
+        if (cv::waitKey(1) != -1) {
             capture.release();
             std::cout << "finished by user\n";
             break;
