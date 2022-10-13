@@ -50,55 +50,69 @@ namespace kilolib {
             return YD_RESULT::YD_ERROR;
         }
 
-        cv::Mat blob;
 
+
+        //change the format of and NN
         auto input_image = _format(frame);
 
         // create BLOB, set it as Net input and try to find Kilobots
-        cv::dnn::blobFromImage(input_image, blob, 1. / 255., cv::Size(INPUT_WIDTH, INPUT_HEIGHT), cv::Scalar(), true, false);
-       if (blob.empty()) return YD_RESULT::YD_ERROR;
+        cv::Mat blob;
+        cv::dnn::blobFromImage(input_image, blob, 1. / 255., cv::Size(INPUT_WIDTH, INPUT_HEIGHT), cv::Scalar(), true,
+                               false);
+        if (blob.empty()) return YD_RESULT::YD_ERROR;
+        // set  the blob as the NN input
         _net.setInput(blob);
-
-        _net.forward(_outputs, "output");
+        // process the blob by the NN
+        std::vector<std::vector<Mat>> nnOutput;
+        _net.forward(nnOutput, {"output"});
 
         float x_factor = input_image.cols / INPUT_WIDTH;
         float y_factor = input_image.rows / INPUT_HEIGHT;
 
-
-        // get output from Net
-        float* data = (float*)_outputs[0].data;
-
-        // [0, 1,   2,      3,        4,       5]
-        // [x, y, width, height, confidence, score]
-        const int dimensions = 6;
-
         // number of outputs for Net trained on 640x640 px
         const int rows = 25200;
 
+        // prepare output vectors
         std::vector<float> confidences;
         std::vector<cv::Rect> boxes;
 
-        // filter outputs and get only results where Net was confident
-        for (int r = 0; r < rows; ++r) {
-            if (data[4] >= conf) { // data[4] == confidence
-                if (data[5] > score) { // data[5] == kilobot score
+        //iterate over the data
+        for (const auto &layer: nnOutput) {
+            for (const auto &result: layer) {
+                for (int i = 0; i < rows; ++i) {
 
-                    confidences.push_back(data[4]);
+                    // [0, 1,   2,      3,        4,       5]
+                    // [x, y, width, height, confidence, score]
+                    struct tPredict {
+                        float x;
+                        float y;
+                        float width;
+                        float height;
+                        float confidence;
+                        float score;
+                    };
+                    static_assert(sizeof(tPredict) == (sizeof(float) * 6));
 
-                    float x = data[0];
-                    float y = data[1];
-                    float w = data[2];
-                    float h = data[3];
-                    int left = int((x - 0.5 * w) * x_factor);
-                    int top = int((y - 0.5 * h) * y_factor);
-                    int width = int(w * x_factor);
-                    int height = int(h * y_factor);
-                    boxes.push_back(cv::Rect(left, top, width, height));
+                    tPredict prediction = result.at<tPredict>(i);
+                    if (prediction.confidence >= conf) { // data[4] == confidence
+                        if (prediction.score > score) { // data[5] == kilobot score
+                            confidences.push_back(prediction.confidence);
+
+                            float x = prediction.x;
+                            float y = prediction.y;
+                            float w = prediction.width;
+                            float h = prediction.height;
+                            int left = int((x - 0.5 * w) * x_factor);
+                            int top = int((y - 0.5 * h) * y_factor);
+                            int width = int(w * x_factor);
+                            int height = int(h * y_factor);
+                            boxes.push_back(cv::Rect(left, top, width, height));
+
+
+                        }
+                    }
                 }
             }
-
-            // move to next output
-            data += dimensions;
         }
 
         // apply Non maximum suppression and reduce number of multiply detected objets 
