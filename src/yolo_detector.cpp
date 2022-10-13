@@ -56,12 +56,14 @@ namespace kilolib {
 
         // create BLOB, set it as Net input and try to find Kilobots
         cv::dnn::blobFromImage(input_image, blob, 1. / 255., cv::Size(INPUT_WIDTH, INPUT_HEIGHT), cv::Scalar(), true, false);
+       if (blob.empty()) return YD_RESULT::YD_ERROR;
         _net.setInput(blob);
 
-        _net.forward(_outputs, _net.getUnconnectedOutLayersNames());
+        _net.forward(_outputs, "output");
 
         float x_factor = input_image.cols / INPUT_WIDTH;
         float y_factor = input_image.rows / INPUT_HEIGHT;
+
 
         // get output from Net
         float* data = (float*)_outputs[0].data;

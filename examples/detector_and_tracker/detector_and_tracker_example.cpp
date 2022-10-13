@@ -23,10 +23,12 @@ int main(int argc, char** argv)
 {
     // Creates YOLO detector and loads DNN model "best.onnx"
     YoloDetector detector;
-    detector.LoadNet("best.onnx", true);
+    if (YD_RESULT::YD_OK != detector.LoadNet("../../../utils/best.onnx", false)){
+        return -1;
+    }
 
     // Open video "bodyguard.mp4"
-    cv::VideoCapture capture("bodyguard.mp4");
+    cv::VideoCapture capture("../../../utils/bodyguard.mp4");
 
     if (!capture.isOpened())
     {
