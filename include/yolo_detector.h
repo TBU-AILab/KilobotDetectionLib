@@ -11,6 +11,8 @@
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/dnn.hpp>
+#include <string>
+#include <vector>
 
 #include "kilobot.h"
 
@@ -33,14 +35,18 @@ namespace kilolib {
 
     class YoloDetector {
     public:
-        /**
-         * @brief Constructor
-        */
-        YoloDetector();
+
+        explicit YoloDetector(const std::string &fileName = "", bool is_cuda = false);
 
         YD_RESULT LoadNet(const string &pathToFile, bool is_cuda);
 
-        YD_RESULT Detect(cv::Mat& frame, std::vector<Kilobot>& output, float scoreVal, float confVal, float nmsVal);
+        YD_RESULT Detect(cv::Mat &frame, std::vector<Kilobot> &output, float scoreVal, float confVal, float nmsVal);
+
+        /**
+         * @brief Check if some network is loaded or not.
+         * @return True if the network is correctly loaded, false otherwise.
+         */
+        bool isLoaded() const { return !_net.empty(); }
 
     protected:
         YD_RESULT _createInputBlob(const cv::Mat &inFrame, cv::Mat &outBlob, float &outXFactor, float &outYFactor);
@@ -48,7 +54,9 @@ namespace kilolib {
         YD_RESULT _parseNNResults(const std::vector<std::vector<Mat>> &nnOutput, std::vector<float> &confidences,
                                   std::vector<cv::Rect> &boxes, int resultRows, float xScale,
                                   float yScale, float scoreVal, float confVal);
-        cv::Mat _format(const cv::Mat& source);
+
+        cv::Mat _format(const cv::Mat &source);
+
         cv::dnn::Net _net; /*!< Loaded DNN Net model. */
     };
 }

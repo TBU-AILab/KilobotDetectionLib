@@ -4,7 +4,15 @@
 
 namespace kilolib {
 
-    YoloDetector::YoloDetector() {
+
+    /**
+     * @brief Default constructor.
+     * @param fileName Name of the file representing net structure
+     * @param is_cuda True if CUDA execution need to be run.
+     */
+    YoloDetector::YoloDetector(const std::string &fileName, bool is_cuda) {
+        if (!fileName.empty())
+            LoadNet(fileName, is_cuda);
     }
 
 
@@ -20,7 +28,6 @@ namespace kilolib {
         if (pathToFile.empty()) {
             return YD_RESULT::YD_ARGS_ERROR;
         }
-
         // loads a neural network from provided file
         _net = cv::dnn::readNet(pathToFile);
 
