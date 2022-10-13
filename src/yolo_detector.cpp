@@ -8,7 +8,7 @@ namespace kilolib {
     {
     }
 
-    YD_RESULT YoloDetector::LoadNet(string pathToFile, bool is_cuda)
+    YD_RESULT YoloDetector::LoadNet(const string &pathToFile, bool is_cuda)
     {
         if (pathToFile.empty()){
             return YD_RESULT::YD_ARGS_ERROR;
@@ -49,25 +49,16 @@ namespace kilolib {
 #endif
             return YD_RESULT::YD_ERROR;
         }
-
-
-
-        //change the format of and NN
-        auto input_image = _format(frame);
-
         // create BLOB, set it as Net input and try to find Kilobots
         cv::Mat blob;
-        cv::dnn::blobFromImage(input_image, blob, 1. / 255., cv::Size(INPUT_WIDTH, INPUT_HEIGHT), cv::Scalar(), true,
-                               false);
-        if (blob.empty()) return YD_RESULT::YD_ERROR;
-        // set  the blob as the NN input
-        _net.setInput(blob);
+        float x_factor; // final scale factor x-axis
+        float y_factor; // final scale factor y-axis
+        _createInputBlob(frame,blob, x_factor, y_factor);
+
         // process the blob by the NN
         std::vector<std::vector<Mat>> nnOutput;
+        _net.setInput(blob);
         _net.forward(nnOutput, {"output"});
-
-        float x_factor = input_image.cols / INPUT_WIDTH;
-        float y_factor = input_image.rows / INPUT_HEIGHT;
 
         // number of outputs for Net trained on 640x640 px
         const int rows = 25200;
@@ -76,44 +67,7 @@ namespace kilolib {
         std::vector<float> confidences;
         std::vector<cv::Rect> boxes;
 
-        //iterate over the data
-        for (const auto &layer: nnOutput) {
-            for (const auto &result: layer) {
-                for (int i = 0; i < rows; ++i) {
-
-                    // [0, 1,   2,      3,        4,       5]
-                    // [x, y, width, height, confidence, score]
-                    struct tPredict {
-                        float x;
-                        float y;
-                        float width;
-                        float height;
-                        float confidence;
-                        float score;
-                    };
-                    static_assert(sizeof(tPredict) == (sizeof(float) * 6));
-
-                    tPredict prediction = result.at<tPredict>(i);
-                    if (prediction.confidence >= conf) { // data[4] == confidence
-                        if (prediction.score > score) { // data[5] == kilobot score
-                            confidences.push_back(prediction.confidence);
-
-                            float x = prediction.x;
-                            float y = prediction.y;
-                            float w = prediction.width;
-                            float h = prediction.height;
-                            int left = int((x - 0.5 * w) * x_factor);
-                            int top = int((y - 0.5 * h) * y_factor);
-                            int width = int(w * x_factor);
-                            int height = int(h * y_factor);
-                            boxes.push_back(cv::Rect(left, top, width, height));
-
-
-                        }
-                    }
-                }
-            }
-        }
+        _parseNNResults(nnOutput, confidences,boxes, rows,x_factor,y_factor, score,conf);
 
         // apply Non maximum suppression and reduce number of multiply detected objets 
         std::vector<int> nms_result;
@@ -148,5 +102,65 @@ namespace kilolib {
 
         source.copyTo(result(cv::Rect(0, 0, col, row)));
         return result;
+    }
+
+    YD_RESULT YoloDetector::_createInputBlob(cv::Mat inFrame, cv::Mat &outBlob, float& outXFactor, float &outYFactor) {
+        //change the format of and NN
+        auto input_image = _format(inFrame);
+
+        // create BLOB, set it as Net input and try to find Kilobots
+        cv::dnn::blobFromImage(input_image, outBlob, 1. / 255., cv::Size(INPUT_WIDTH, INPUT_HEIGHT), cv::Scalar(), true,
+                               false);
+        if (outBlob.empty()) return YD_RESULT::YD_ERROR;
+
+        outXFactor = input_image.cols / INPUT_WIDTH;
+        outYFactor = input_image.rows / INPUT_HEIGHT;
+
+        return YD_RESULT::YD_OK;
+    }
+
+    YD_RESULT YoloDetector::_parseNNResults(const vector<std::vector<Mat>> &nnOutput, std::vector<float> &confidences,
+                                            std::vector<cv::Rect> &boxes, int resultRows, float xScale,
+                                            float yScale, float scoreVal, float confVal) {
+        //iterate over the data
+        for (const auto &layer: nnOutput) {
+            for (const auto &result: layer) {
+                for (int i = 0; i < resultRows; ++i) {
+
+                    // [0, 1,   2,      3,        4,       5]
+                    // [x, y, width, height, confidence, score]
+                    struct tPredict {
+                        float x;
+                        float y;
+                        float width;
+                        float height;
+                        float confidence;
+                        float score;
+                    };
+                    static_assert(sizeof(tPredict) == (sizeof(float) * 6));
+
+                    tPredict prediction = result.at<tPredict>(i);
+                    if (prediction.confidence >= confVal) { // data[4] == confidence
+                        if (prediction.score > scoreVal) { // data[5] == kilobot score
+                            confidences.push_back(prediction.confidence);
+
+                            float x = prediction.x;
+                            float y = prediction.y;
+                            float w = prediction.width;
+                            float h = prediction.height;
+                            int left = int((x - 0.5 * w) * xScale);
+                            int top = int((y - 0.5 * h) * yScale);
+                            int width = int(w * xScale);
+                            int height = int(h * yScale);
+                            boxes.push_back(cv::Rect(left, top, width, height));
+
+
+                        }
+                    }
+                }
+            }
+        }
+
+        return YD_RESULT::YD_ERROR;
     }
 }

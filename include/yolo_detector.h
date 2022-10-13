@@ -47,7 +47,7 @@ namespace kilolib {
          *
          * @result Result information @sa YD_RESULT
         */
-        YD_RESULT LoadNet(string pathToFile, bool is_cuda);
+        YD_RESULT LoadNet(const string &pathToFile, bool is_cuda);
 
         /**
          * @brief Method used for Kilobot detection in frame.
@@ -62,6 +62,12 @@ namespace kilolib {
         */
         YD_RESULT Detect(cv::Mat& frame, std::vector<Kilobot>& output, float scoreVal, float confVal, float nmsVal);
 
+
+    protected:
+        YD_RESULT _createInputBlob(cv::Mat inFrame, cv::Mat &outBlob, float& outXFactor, float &outYFactor );
+        YD_RESULT _parseNNResults(const std::vector<std::vector<Mat>> &nnOutput, std::vector<float> &confidences,
+                                  std::vector<cv::Rect> &boxes, int resultRows, float xScale,
+                                  float yScale, float scoreVal, float confVal);
     private:
 
         /**
