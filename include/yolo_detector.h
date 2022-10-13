@@ -31,7 +31,6 @@ namespace kilolib {
         YD_ERROR        /**< unspecified error */
     };
 
-
     class YoloDetector {
     public:
         /**
@@ -39,46 +38,17 @@ namespace kilolib {
         */
         YoloDetector();
 
-        /**
-         * @brief Loads model from path and determinates running on CPU or GPU.
-         *
-         * @param pathToFile Relative path to file with pretrained YOLOV5 model.
-         * @param is_cuda If true, function tries to run Net with CUDA backend.
-         *
-         * @result Result information @sa YD_RESULT
-        */
         YD_RESULT LoadNet(const string &pathToFile, bool is_cuda);
 
-        /**
-         * @brief Method used for Kilobot detection in frame.
-         *
-         * @param frame Frame used for detection.
-         * @param output Vector in which detections will be stored.
-         * @param scoreVal Minimum value for kilobot score. Values greater than this are considered to be Kilobots.
-         * @param confVal Minimum value for confidence used by Net. Values greater than this are considered to be objects.
-         * @param nmsVal Value usedfor non-maximum suppression.
-         *
-         * @result Result information @sa YD_RESULT
-        */
         YD_RESULT Detect(cv::Mat& frame, std::vector<Kilobot>& output, float scoreVal, float confVal, float nmsVal);
 
-
     protected:
-        YD_RESULT _createInputBlob(cv::Mat inFrame, cv::Mat &outBlob, float& outXFactor, float &outYFactor );
+        YD_RESULT _createInputBlob(const cv::Mat &inFrame, cv::Mat &outBlob, float &outXFactor, float &outYFactor);
+
         YD_RESULT _parseNNResults(const std::vector<std::vector<Mat>> &nnOutput, std::vector<float> &confidences,
                                   std::vector<cv::Rect> &boxes, int resultRows, float xScale,
                                   float yScale, float scoreVal, float confVal);
-    private:
-
-        /**
-         * @brief Expand the source image to a square image, where the bigger dimension is used.
-         * @param source Source image
-         * @return Extended image
-         */
         cv::Mat _format(const cv::Mat& source);
-
-    private:
         cv::dnn::Net _net; /*!< Loaded DNN Net model. */
-        std::vector<cv::Mat> _outputs; /*!< Output of DNN detection. */
     };
 }
