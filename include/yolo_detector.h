@@ -16,11 +16,9 @@
 
 #include "kilobot.h"
 
-using namespace std;
-using namespace cv;
 
-static const float INPUT_WIDTH = 640.0;
-static const float INPUT_HEIGHT = 640.0;
+static const int INPUT_WIDTH = 640;
+static const int INPUT_HEIGHT = 640;
 
 namespace kilolib {
 
@@ -38,9 +36,10 @@ namespace kilolib {
 
         explicit YoloDetector(const std::string &fileName = "", bool is_cuda = false);
 
-        YD_RESULT LoadNet(const string &pathToFile, bool is_cuda);
+        YD_RESULT LoadNet(const std::string &pathToFile, bool is_cuda);
 
-        YD_RESULT Detect(cv::Mat &frame, std::vector<Kilobot> &output, float scoreVal, float confVal, float nmsVal);
+        YD_RESULT
+        Detect(const cv::Mat &frame, std::vector<Kilobot> &output, float scoreVal, float confVal, float nmsVal);
 
         /**
          * @brief Check if some network is loaded or not.
@@ -49,14 +48,16 @@ namespace kilolib {
         bool isLoaded() const { return !_net.empty(); }
 
     protected:
-        YD_RESULT _createInputBlob(const cv::Mat &inFrame, cv::Mat &outBlob, float &outXFactor, float &outYFactor);
+        static YD_RESULT
+        _createInputBlob(const cv::Mat &inFrame, cv::Mat &outBlob, float &outXFactor, float &outYFactor);
 
-        YD_RESULT _parseNNResults(const std::vector<std::vector<Mat>> &nnOutput, std::vector<float> &confidences,
-                                  std::vector<cv::Rect> &boxes, int resultRows, float xScale,
-                                  float yScale, float scoreVal, float confVal);
+        static YD_RESULT _parseNNResults(const std::vector<std::vector<Mat>> &nnOutput, std::vector<float> &confidences,
+                                         std::vector<cv::Rect> &boxes, int resultRows, float xScale,
+                                         float yScale, float scoreVal, float confVal);
 
-        cv::Mat _format(const cv::Mat &source);
+        static cv::Mat _format(const cv::Mat &source);
 
+    private:
         cv::dnn::Net _net; /*!< Loaded DNN Net model. */
     };
 }

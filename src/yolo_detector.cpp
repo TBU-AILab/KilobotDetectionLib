@@ -24,7 +24,7 @@ namespace kilolib {
      *
      * @result Result information @sa YD_RESULT
     */
-    YD_RESULT YoloDetector::LoadNet(const string &pathToFile, bool is_cuda) {
+    YD_RESULT YoloDetector::LoadNet(const std::string &pathToFile, bool is_cuda) {
         if (pathToFile.empty()) {
             return YD_RESULT::YD_ARGS_ERROR;
         }
@@ -64,7 +64,8 @@ namespace kilolib {
      *
      * @result Result information @sa YD_RESULT
     */
-    YD_RESULT YoloDetector::Detect(cv::Mat &frame, std::vector<Kilobot> &output, float score, float conf, float nms) {
+    YD_RESULT
+    YoloDetector::Detect(const cv::Mat &frame, std::vector<Kilobot> &output, float score, float conf, float nms) {
         if (_net.empty()) {
 #ifdef ENABLE_DEBUG
             std::cout << "There is no Net available for detection!\n";
@@ -93,8 +94,7 @@ namespace kilolib {
         cv::dnn::NMSBoxes(boxes, confidences, score, nms, nms_result);
 
         // convert results to a collection of Kilobots
-        for (int n = 0; n < nms_result.size(); n++) {
-            int idx = nms_result[n];
+        for (auto idx: nms_result) {
             Kilobot result;
             result.confidence = confidences[idx];
             result.box = boxes[idx];
@@ -146,8 +146,8 @@ namespace kilolib {
                                false);
         if (outBlob.empty()) return YD_RESULT::YD_ERROR;
 
-        outXFactor = input_image.cols / INPUT_WIDTH;
-        outYFactor = input_image.rows / INPUT_HEIGHT;
+        outXFactor = (float) input_image.cols / INPUT_WIDTH;
+        outYFactor = (float) input_image.rows / INPUT_HEIGHT;
 
         return YD_RESULT::YD_OK;
     }
@@ -165,9 +165,10 @@ namespace kilolib {
      * @param confVal required confidence value (only higher or equal values will be accepted)
      * @return result information @sa YD_RESULT
      */
-    YD_RESULT YoloDetector::_parseNNResults(const vector<std::vector<Mat>> &nnOutput, std::vector<float> &confidences,
-                                            std::vector<cv::Rect> &boxes, int resultRows, float xScale,
-                                            float yScale, float scoreVal, float confVal) {
+    YD_RESULT
+    YoloDetector::_parseNNResults(const std::vector<std::vector<Mat>> &nnOutput, std::vector<float> &confidences,
+                                  std::vector<cv::Rect> &boxes, int resultRows, float xScale,
+                                  float yScale, float scoreVal, float confVal) {
         //iterate over the data
         for (const auto &layer: nnOutput) {
             for (const auto &result: layer) {
@@ -186,17 +187,14 @@ namespace kilolib {
                     static_assert(sizeof(tPredict) == (sizeof(float) * 6));
 
                     tPredict prediction = result.at<tPredict>(i);
-                    if (prediction.confidence >= confVal) { // data[4] == confidence
-                        if (prediction.score > scoreVal) { // data[5] == kilobot score
-                            confidences.push_back(prediction.confidence);
-
-                            int left = int((prediction.x - 0.5 * prediction.width) * xScale);
-                            int top = int((prediction.y - 0.5 * prediction.height) * yScale);
-                            int width = int(prediction.width * xScale);
-                            int height = int(prediction.height * yScale);
-                            boxes.emplace_back(left, top, width, height);
-
-                        }
+                    if ((prediction.confidence >= confVal) &&
+                        (prediction.score > scoreVal)) { // data[5] == kilobot score
+                        confidences.push_back(prediction.confidence);
+                        auto left = int((prediction.x - 0.5 * prediction.width) * xScale);
+                        auto top = int((prediction.y - 0.5 * prediction.height) * yScale);
+                        auto width = int(prediction.width * xScale);
+                        auto height = int(prediction.height * yScale);
+                        boxes.emplace_back(left, top, width, height);
                     }
                 }
             }
