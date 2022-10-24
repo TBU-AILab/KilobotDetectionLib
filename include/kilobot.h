@@ -24,6 +24,5 @@ namespace kilolib {
         std::vector<Point> trajectory; /*!< vector containing trajectory */
         Scalar color; /*!< Kilobot color */
         Scalar LEDcolor; /*!< LED color */
-        Point center() { return Point(box.x + box.width / 2, box.y + box.height / 2); }
     };
 }
