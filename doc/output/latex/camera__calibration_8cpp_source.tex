@@ -1,0 +1,106 @@
+\hypertarget{camera__calibration_8cpp_source}{}\doxysection{camera\+\_\+calibration.\+cpp}
+\label{camera__calibration_8cpp_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/src/camera\_calibration.cpp@{/Users/peterjanku/SourcesCpp/Kilolib/src/camera\_calibration.cpp}}
+\mbox{\hyperlink{camera__calibration_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{camera__calibration_8h}{camera\_calibration.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include <opencv2/calib3d/calib3d.hpp>}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include <opencv2/highgui/highgui.hpp>}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00005}00005 \textcolor{preprocessor}{\#include <opencv2/imgproc/imgproc.hpp>}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00007}00007 \textcolor{keyword}{using namespace }cv;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00008}00008 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00010}00010 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}} \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00012}\mbox{\hyperlink{namespacekilolib_a38493592398c6d0936852fbd749e1e73}{00012}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{namespacekilolib_a38493592398c6d0936852fbd749e1e73}{CalculatePoints}}(\textcolor{keywordtype}{string} folderPath, \textcolor{keywordtype}{string} suffix, \textcolor{keywordtype}{int} cbWidth, \textcolor{keywordtype}{int} cbHeight,}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00013}00013         vector<vector<Point3f>>\& objPoints, vector<vector<Point2f>>\& imgPoints, Size\& size) \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00015}00015         \textcolor{comment}{// Defining the world coordinates for 3D points}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00016}00016         vector<Point3f> objp;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00017}00017         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < cbHeight; i++)}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00019}00019             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < cbWidth; j++)}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00020}00020                 objp.push\_back(Point3f(j, i, 0));}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00021}00021         \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00023}00023         \textcolor{comment}{// Extracting path of individual image stored in a given directory}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00024}00024         vector<String> images;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00025}00025         \textcolor{comment}{// Path of the folder containing checkerboard images}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00027}00027         stringstream stream;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00028}00028         stream << \textcolor{stringliteral}{"{}./"{}} << folderPath << \textcolor{stringliteral}{"{}*"{}} << suffix;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00030}00030         \textcolor{keywordtype}{string} path = stream.str();}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00032}00032         \textcolor{comment}{// list all filenames to images vector}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00033}00033         glob(path, images);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00035}00035         Mat frame, gray;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00036}00036         \textcolor{comment}{// vector to store the pixel coordinates of detected checker board corners }}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00037}00037         vector<Point2f> corner\_pts;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00038}00038         \textcolor{keywordtype}{bool} success;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00040}00040         \textcolor{comment}{// Looping over all the images in the directory}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00041}00041         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < images.size(); i++)}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00042}00042         \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00043}00043             std::cout << \textcolor{stringliteral}{"{}processing img: "{}} << i + 1 << std::endl;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00045}00045             frame = imread(images[i]);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00046}00046             cvtColor(frame, gray, COLOR\_BGR2GRAY);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00048}00048             \textcolor{comment}{// Finding checker board corners}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00049}00049             \textcolor{comment}{// If desired number of corners are found in the image then success = true  }}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00050}00050             success = findChessboardCorners(gray, Size(cbWidth, cbHeight), corner\_pts);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00052}00052             \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00053}00053 \textcolor{comment}{             * If desired number of corner are detected,}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00054}00054 \textcolor{comment}{             * we refine the pixel coordinates and display}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00055}00055 \textcolor{comment}{             * them on the images of checker board}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00056}00056 \textcolor{comment}{            */}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00057}00057             \textcolor{keywordflow}{if} (success)}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00058}00058             \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00059}00059                 std::cout << \textcolor{stringliteral}{"{}accepted"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00061}00061                 TermCriteria criteria(TermCriteria::EPS | TermCriteria::MAX\_ITER, 30, 0.001);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00063}00063                 \textcolor{comment}{// refining pixel coordinates for given 2d points.}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00064}00064                 cornerSubPix(gray, corner\_pts, Size(11, 11), Size(-\/1, -\/1), criteria);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00066}00066                 \textcolor{comment}{// Displaying the detected corner points on the checker board}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00067}00067                 drawChessboardCorners(frame, Size(cbWidth, cbHeight), corner\_pts, success);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00069}00069                 objPoints.push\_back(objp);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00070}00070                 imgPoints.push\_back(corner\_pts);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00072}00072                 \textcolor{comment}{//imshow("{}img"{}, frame);}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00073}00073                 \textcolor{comment}{//waitKey(0);}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00074}00074             \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00075}00075         \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00077}00077         \textcolor{keywordflow}{if} (!gray.empty())}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00078}00078             size = gray.size();}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00080}00080         \textcolor{keywordflow}{if} (objPoints.size() > 2) \textcolor{comment}{// minimum size needed for calculation}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00081}00081             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00083}00083         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00084}00084     \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00086}\mbox{\hyperlink{namespacekilolib_ae6e910dde5c19f7363d45d7599924699}{00086}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{namespacekilolib_ae6e910dde5c19f7363d45d7599924699}{StoreCalibration}}(\textcolor{keywordtype}{string} fileName, Mat cameraMatrix, Mat distCoeffs) \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00087}00087         FileStorage fs(fileName, FileStorage::WRITE);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00089}00089         fs << \textcolor{stringliteral}{"{}Camera\_matrix"{}} << cameraMatrix;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00090}00090         fs << \textcolor{stringliteral}{"{}Distortion\_coeficients"{}} << distCoeffs;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00091}00091     \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00093}\mbox{\hyperlink{namespacekilolib_a60fcd292cdf032a8b1f4a156130496a3}{00093}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{namespacekilolib_a60fcd292cdf032a8b1f4a156130496a3}{LoadCalibration}}(\textcolor{keywordtype}{string} fileName, Mat\& cameraMatrix, Mat\& distCoeffs) \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00094}00094         FileStorage fs(fileName, FileStorage::READ);}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00096}00096         fs[\textcolor{stringliteral}{"{}Camera\_matrix"{}}] >> cameraMatrix;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00097}00097         fs[\textcolor{stringliteral}{"{}Distortion\_coeficients"{}}] >> distCoeffs;}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00098}00098     \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{camera__calibration_8cpp_source_l00100}00100 \}}
+
+\end{DoxyCode}

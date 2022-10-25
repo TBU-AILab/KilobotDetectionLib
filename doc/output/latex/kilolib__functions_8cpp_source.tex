@@ -1,0 +1,159 @@
+\hypertarget{kilolib__functions_8cpp_source}{}\doxysection{kilolib\+\_\+functions.\+cpp}
+\label{kilolib__functions_8cpp_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/src/kilolib\_functions.cpp@{/Users/peterjanku/SourcesCpp/Kilolib/src/kilolib\_functions.cpp}}
+\mbox{\hyperlink{kilolib__functions_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{kilolib__functions_8h}{kilolib\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}} \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00005}\mbox{\hyperlink{namespacekilolib_a5c541b572c313e148d2cbc8f0e8de5d8}{00005}}     Point \mbox{\hyperlink{namespacekilolib_a5c541b572c313e148d2cbc8f0e8de5d8}{findLED}}(Mat frame, Rect box, \textcolor{keywordtype}{double} thresh, \textcolor{keywordtype}{double} minArea)}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00007}00007         \textcolor{keywordtype}{int} x = -\/1;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00008}00008         \textcolor{keywordtype}{int} y = -\/1;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00010}00010         Mat kilobot = frame(box);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00012}00012         \textcolor{comment}{// remove everything outside the Kilobot}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00013}00013         Mat mask = Mat::zeros(kilobot.rows, kilobot.cols, kilobot.type());}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00015}00015         \textcolor{keywordtype}{double} radius = kilobot.rows / 2;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00017}00017         \textcolor{keywordflow}{if} (kilobot.rows > kilobot.cols)}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00018}00018             radius = kilobot.cols / 2;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00020}00020         circle(mask, Point(kilobot.rows / 2, kilobot.cols / 2), radius, Scalar(255, 255, 255), FILLED);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00022}00022         Mat res;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00023}00023         bitwise\_and(kilobot, mask, res);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00025}00025         \textcolor{comment}{// remove everything around Kilobots center}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00026}00026         radius = res.size().width / 3;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00027}00027         circle(res, Point(res.rows / 2, res.cols / 2), radius, Scalar(0, 0, 0), FILLED);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00029}00029         Mat gray;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00030}00030         cvtColor(res, gray, COLOR\_BGR2GRAY);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00032}00032         \textcolor{comment}{// apply thresholding -\/ remove non-\/bright colors}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00033}00033         Mat th;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00034}00034         threshold(gray, th, thresh, 255, THRESH\_BINARY);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00036}00036         \textcolor{comment}{// find biggest contour -\/ biggest bright space}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00037}00037         vector<vector<Point>> contours;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00038}00038         findContours(th, contours, RETR\_TREE, CHAIN\_APPROX\_SIMPLE);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00040}00040         \textcolor{keywordtype}{int} biggestId = -\/1;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00041}00041         \textcolor{keywordtype}{int} biggestSize = -\/1;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00042}00042         Rect biggestBox;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00044}00044         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < contours.size(); c++) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00045}00045             Rect cBox = boundingRect(contours[c]);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00047}00047             \textcolor{keywordtype}{double} ledArea = (double)cBox.width * (\textcolor{keywordtype}{double})cBox.height;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00049}00049             \textcolor{keywordflow}{if} (ledArea > biggestSize) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00050}00050                 biggestId = c;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00051}00051                 biggestSize = ledArea;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00052}00052                 biggestBox = cBox;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00053}00053             \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00054}00054         \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00056}00056         \textcolor{keywordflow}{if} (biggestId != -\/1) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00057}00057             \textcolor{keywordtype}{double} kilobotArea = (double)th.rows * (\textcolor{keywordtype}{double})th.cols;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00058}00058             \textcolor{keywordtype}{double} ledArea = (double)biggestBox.width * (\textcolor{keywordtype}{double})biggestBox.height;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00059}00059             \textcolor{keywordtype}{double} percentage = (ledArea * 100) / kilobotArea;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00061}00061             \textcolor{keywordflow}{if} (percentage > minArea) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00062}00062                 x = box.tl().x + biggestBox.tl().x + biggestBox.width / 2;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00063}00063                 y = box.tl().y + biggestBox.tl().y + biggestBox.height / 2;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00064}00064             \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00065}00065         \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00067}00067         \textcolor{keywordflow}{return} Point(x, y);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00068}00068     \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00070}\mbox{\hyperlink{namespacekilolib_a3f861165c89aa84c93634f9e57b09112}{00070}}     \textcolor{keywordtype}{double} \mbox{\hyperlink{namespacekilolib_a3f861165c89aa84c93634f9e57b09112}{measureDistance}}(Rect box, Mat frame, \textcolor{keywordtype}{bool} display, Scalar textColor)}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00071}00071     \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00073}00073         \textcolor{keywordflow}{if} (box.empty()) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00074}00074             std::cout << \textcolor{stringliteral}{"{}Unable to display distance, box is empty!"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00075}00075             \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00076}00076         \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00078}00078         \textcolor{keywordflow}{if} (display \&\& frame.empty()) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00079}00079             std::cout << \textcolor{stringliteral}{"{}Unable to display distance, frame is empty!"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00080}00080             \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00081}00081         \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00084}00084         \textcolor{keywordtype}{double} distance = kilobotSize * F / ((box.width + box.height) / 2);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00086}00086         \textcolor{keywordflow}{if} (display) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00088}00088             \textcolor{comment}{// Create an output string stream}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00089}00089             std::ostringstream streamObj;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00090}00090             \textcolor{comment}{// Set Fixed -\/Point Notation}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00091}00091             streamObj << std::fixed;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00092}00092             \textcolor{comment}{// Set precision to 2 digits}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00093}00093             streamObj << std::setprecision(2);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00094}00094             \textcolor{comment}{//Add double to stream}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00095}00095             streamObj << distance;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00096}00096             \textcolor{comment}{// Get string from output string stream}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00097}00097             std::string strObj = streamObj.str();}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00099}00099             cv::putText(frame, strObj, box.tl(), cv::FONT\_HERSHEY\_SIMPLEX, 0.4, textColor, 1);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00100}00100         \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00102}00102         \textcolor{keywordflow}{return} distance;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00103}00103     \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00105}\mbox{\hyperlink{namespacekilolib_ac88405f118b712db98f166369c1e6447}{00105}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{namespacekilolib_ac88405f118b712db98f166369c1e6447}{centerKilobotDetection}}(Mat\& frame, \textcolor{keywordtype}{string} imgPath, \textcolor{keywordtype}{int} percentage, \textcolor{keywordtype}{int} thresh, \textcolor{keywordtype}{bool} measureDist) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00106}00106         Mat original = imread(imgPath);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00108}00108         frame = Mat(original.rows, original.cols, original.type(), Scalar(255, 255, 255));}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00110}00110         \textcolor{keywordtype}{int} w = original.size().width / 100 * percentage;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00111}00111         \textcolor{keywordtype}{int} h = original.size().height / 100 * percentage;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00113}00113         \textcolor{keywordtype}{int} tx = original.size().width / 2 -\/ w / 2;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00114}00114         \textcolor{keywordtype}{int} ty = original.size().height / 2 -\/ h / 2;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00116}00116         Rect r = Rect(tx, ty, w, h);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00118}00118         original(r).copyTo(frame(r));}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00120}00120         Mat gray;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00121}00121         cvtColor(frame, gray, COLOR\_BGR2GRAY);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00123}00123         \textcolor{comment}{// apply thresholding -\/ remove non-\/bright colors}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00124}00124         Mat th;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00125}00125         threshold(gray, th, thresh, 255, THRESH\_BINARY\_INV);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00126}00126 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00127}00127         \textcolor{comment}{// find biggest contour -\/ biggest bright space}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00128}00128         vector<vector<Point>> contours;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00129}00129         findContours(th, contours, RETR\_TREE, CHAIN\_APPROX\_SIMPLE);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00131}00131         \textcolor{keywordtype}{int} biggestSize = -\/1;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00132}00132         Rect biggestBox;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00134}00134         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < contours.size(); c++) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00135}00135             Rect cBox = boundingRect(contours[c]);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00137}00137             \textcolor{keywordtype}{double} area = (double)cBox.width * (\textcolor{keywordtype}{double})cBox.height;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00138}00138 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00139}00139             \textcolor{keywordflow}{if} (area > biggestSize) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00140}00140                 biggestSize = area;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00141}00141                 biggestBox = cBox;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00142}00142             \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00143}00143         \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00145}00145 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00146}00146         \textcolor{keywordflow}{if} (biggestSize != -\/1) \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00147}00147             rectangle(frame, biggestBox, Scalar(0, 255, 0));}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00149}00149             \textcolor{keywordflow}{if} (measureDist)}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00150}00150                 \mbox{\hyperlink{namespacekilolib_a3f861165c89aa84c93634f9e57b09112}{measureDistance}}(biggestBox, frame, \textcolor{keyword}{true}, Scalar(255, 0, 255));}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00151}00151         \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00152}00152     \}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00153}00153 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8cpp_source_l00154}00154 \}}
+
+\end{DoxyCode}

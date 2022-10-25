@@ -1,0 +1,56 @@
+\hypertarget{camera__calibration__load__example_8cpp_source}{}\doxysection{camera\+\_\+calibration\+\_\+load\+\_\+example.\+cpp}
+\label{camera__calibration__load__example_8cpp_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/examples/calibration\_load/camera\_calibration\_load\_example.cpp@{/Users/peterjanku/SourcesCpp/Kilolib/examples/calibration\_load/camera\_calibration\_load\_example.cpp}}
+\mbox{\hyperlink{camera__calibration__load__example_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00001}00001 \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00009}00009 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{camera__calibration_8h}{camera\_calibration.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00011}00011 \textcolor{keyword}{using namespace }cv;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00012}00012 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00013}00013 \textcolor{keyword}{using namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}};}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00015}\mbox{\hyperlink{camera__calibration__load__example_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00015}} \textcolor{keywordtype}{int} \mbox{\hyperlink{camera__calibration__load__example_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}()}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00016}00016 \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00017}00017     \textcolor{comment}{// Creating vector to store vectors of 3D points for each checkerboard image}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00018}00018     vector<vector<Point3f>> objpoints;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00020}00020     \textcolor{comment}{// Creating vector to store vectors of 2D points for each checkerboard image}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00021}00021     vector<vector<Point2f>> imgpoints;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00023}00023     cv::Mat cameraMatrix, distCoeffs;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00025}00025     Mat original;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00026}00026     Mat un;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00028}00028     \textcolor{comment}{// load calibration.xml file and store data into camera matrix and distoriton coefficients matrixes}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00029}00029     \mbox{\hyperlink{namespacekilolib_a60fcd292cdf032a8b1f4a156130496a3}{LoadCalibration}}(\textcolor{stringliteral}{"{}calibration.xml"{}}, cameraMatrix, distCoeffs);}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00031}00031     \textcolor{keywordflow}{if} (cameraMatrix.empty() || distCoeffs.empty()) \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00032}00032         std::cout << \textcolor{stringliteral}{"{}the matrices were not loaded correctly"{}} << std::endl;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00033}00033         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00036}00036     \textcolor{keywordflow}{while} (\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00037}00037         \textcolor{comment}{// read test frame}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00038}00038         original = imread(\textcolor{stringliteral}{"{}images/11.jpg"{}});}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00040}00040         \textcolor{comment}{// undistort view}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00041}00041         undistort(original, un, cameraMatrix, distCoeffs);}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00043}00043         \textcolor{comment}{// show original and undistorted img}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00044}00044         imshow(\textcolor{stringliteral}{"{}original"{}}, original);}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00045}00045         imshow(\textcolor{stringliteral}{"{}undistorted"{}}, un);}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00047}00047         \textcolor{keywordflow}{if} (waitKey(1) != -\/1)}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00048}00048         \{}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00049}00049             std::cout << \textcolor{stringliteral}{"{}finished by user\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00050}00050             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00051}00051         \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00052}00052     \}}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00054}00054     waitKey(0);}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00056}00056     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{camera__calibration__load__example_8cpp_source_l00057}00057 \}}
+
+\end{DoxyCode}

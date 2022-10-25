@@ -1,0 +1,157 @@
+\hypertarget{yolo__detector_8cpp_source}{}\doxysection{yolo\+\_\+detector.\+cpp}
+\label{yolo__detector_8cpp_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/src/yolo\_detector.cpp@{/Users/peterjanku/SourcesCpp/Kilolib/src/yolo\_detector.cpp}}
+\mbox{\hyperlink{yolo__detector_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{yolo__detector_8h}{yolo\_detector.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include <random>}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00005}00005 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}} \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00013}\mbox{\hyperlink{classkilolib_1_1_yolo_detector_a19e1e020b3a69c506f142679ddeae6e2}{00013}}     \mbox{\hyperlink{classkilolib_1_1_yolo_detector_a19e1e020b3a69c506f142679ddeae6e2}{YoloDetector::YoloDetector}}(\textcolor{keyword}{const} std::string \&fileName, \textcolor{keywordtype}{bool} is\_cuda) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00014}00014         \textcolor{keywordflow}{if} (!fileName.empty())}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00015}00015             \mbox{\hyperlink{classkilolib_1_1_yolo_detector_a8b0bb633821196f17f4fb9907b909e30}{LoadNet}}(fileName, is\_cuda);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00016}00016     \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00027}\mbox{\hyperlink{classkilolib_1_1_yolo_detector_a8b0bb633821196f17f4fb9907b909e30}{00027}}     \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\_RESULT}} \mbox{\hyperlink{classkilolib_1_1_yolo_detector_a8b0bb633821196f17f4fb9907b909e30}{YoloDetector::LoadNet}}(\textcolor{keyword}{const} std::string \&pathToFile, \textcolor{keywordtype}{bool} is\_cuda) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00028}00028         \textcolor{keywordflow}{if} (pathToFile.empty()) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00029}00029             \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8ad4332b7890b2ec6195346ddc00e41d4f}{YD\_RESULT::YD\_ARGS\_ERROR}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00030}00030         \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00031}00031         \textcolor{comment}{// loads a neural network from provided file}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00032}00032         \_net = cv::dnn::readNet(pathToFile);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00034}00034         \textcolor{keywordflow}{if} (\_net.empty()) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00035}00035             \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a0b3aac4fd6ec9ff61a499a2cee1fd398}{YD\_RESULT::YD\_ERROR}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00036}00036         \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00038}00038         \textcolor{keywordflow}{if} (is\_cuda) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00039}00039 \textcolor{preprocessor}{\#ifdef ENABLE\_DEBUG}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00040}00040             std::cout << \textcolor{stringliteral}{"{}Running with CUDA\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00041}00041 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00042}00042             \_net.setPreferableBackend(cv::dnn::DNN\_BACKEND\_CUDA);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00043}00043             \_net.setPreferableTarget(cv::dnn::DNN\_TARGET\_CUDA\_FP16);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00044}00044         \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00045}00045 \textcolor{preprocessor}{\#ifdef ENABLE\_DEBUG}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00046}00046             std::cout << \textcolor{stringliteral}{"{}Running on CPU\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00047}00047 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00048}00048             \_net.setPreferableBackend(cv::dnn::DNN\_BACKEND\_OPENCV);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00049}00049             \_net.setPreferableTarget(cv::dnn::DNN\_TARGET\_CPU);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00052}00052         \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a40cb362812bedb7a0c61726590f62e23}{YD\_RESULT::YD\_OK}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00053}00053     \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00067}00067     \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\_RESULT}}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00068}\mbox{\hyperlink{classkilolib_1_1_yolo_detector_aeb6c8e4c28095adf29de99235ba3b3ca}{00068}}     \mbox{\hyperlink{classkilolib_1_1_yolo_detector_aeb6c8e4c28095adf29de99235ba3b3ca}{YoloDetector::Detect}}(\textcolor{keyword}{const} cv::Mat \&frame, std::vector<Kilobot> \&output, \textcolor{keywordtype}{float} score, \textcolor{keywordtype}{float} conf, \textcolor{keywordtype}{float} nms) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00069}00069         \textcolor{keywordflow}{if} (\_net.empty()) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00070}00070 \textcolor{preprocessor}{\#ifdef ENABLE\_DEBUG}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00071}00071             std::cout << \textcolor{stringliteral}{"{}There is no Net available for detection!\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00072}00072 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00073}00073             \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a0b3aac4fd6ec9ff61a499a2cee1fd398}{YD\_RESULT::YD\_ERROR}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00074}00074         \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00075}00075         \textcolor{comment}{// create BLOB, set it as Net input and try to find Kilobots}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00076}00076         cv::Mat blob;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00077}00077         \textcolor{keywordtype}{float} x\_factor; \textcolor{comment}{// final scale factor x-\/axis}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00078}00078         \textcolor{keywordtype}{float} y\_factor; \textcolor{comment}{// final scale factor y-\/axis}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00079}00079         \mbox{\hyperlink{classkilolib_1_1_yolo_detector_a7ad702473670a7b5642cdd6f28ce448e}{\_createInputBlob}}(frame, blob, x\_factor, y\_factor);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00081}00081         \textcolor{comment}{// process the blob by the NN}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00082}00082         std::vector<std::vector<Mat>> nnOutput;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00083}00083         \_net.setInput(blob);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00084}00084         \_net.forward(nnOutput, \{\textcolor{stringliteral}{"{}output"{}}\});}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00086}00086         \textcolor{comment}{// parse DNN results}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00087}00087         \textcolor{keyword}{const} \textcolor{keywordtype}{int} rows = 25200; \textcolor{comment}{// number of outputs for Net trained on 640x640 px}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00088}00088         std::vector<float> confidences;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00089}00089         std::vector<cv::Rect> boxes;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00090}00090         \mbox{\hyperlink{classkilolib_1_1_yolo_detector_aa2132fd9cb8756953068153ec50c11f4}{\_parseNNResults}}(nnOutput, confidences, boxes, rows, x\_factor, y\_factor, score, conf);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00091}00091 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00092}00092         \textcolor{comment}{// apply Non maximum suppression and reduce number of multiply detected objets }}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00093}00093         std::vector<int> nms\_result;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00094}00094         cv::dnn::NMSBoxes(boxes, confidences, score, nms, nms\_result);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00096}00096         \textcolor{comment}{// convert results to a collection of Kilobots}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00097}00097         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} idx: nms\_result) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00098}00098             \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} result;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00099}00099             result.\mbox{\hyperlink{structkilolib_1_1_kilobot_a7126878de66a46545b9d5c65530017d6}{confidence}} = confidences[idx];}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00100}00100             result.\mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{box}} = boxes[idx];}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00101}00101             result.\mbox{\hyperlink{structkilolib_1_1_kilobot_aba602b6d1a9429365df324ef2602509a}{id}} = -\/1;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00102}00102             result.\mbox{\hyperlink{structkilolib_1_1_kilobot_a6b0996d5325ab0aa7d847d59b30e97aa}{undetected}} = 0;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00104}00104             result.\mbox{\hyperlink{structkilolib_1_1_kilobot_ac42b29bbf885dbb9a6d03ead01ba646b}{color}} = Scalar(0, 0, 0);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00105}00105             result.\mbox{\hyperlink{structkilolib_1_1_kilobot_a48e88dcc80da8ff17e25894e3946e546}{LEDcolor}} = Scalar(0, 0, 0);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00107}00107             output.push\_back(result);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00108}00108         \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00109}00109         \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a40cb362812bedb7a0c61726590f62e23}{YD\_RESULT::YD\_OK}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00110}00110     \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00117}\mbox{\hyperlink{classkilolib_1_1_yolo_detector_ab59b36f969cdd0b5a27dca5dd0f1e943}{00117}}     cv::Mat \mbox{\hyperlink{classkilolib_1_1_yolo_detector_ab59b36f969cdd0b5a27dca5dd0f1e943}{YoloDetector::\_format}}(\textcolor{keyword}{const} cv::Mat \&source) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00118}00118         \textcolor{keywordtype}{int} col = source.cols;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00119}00119         \textcolor{keywordtype}{int} row = source.rows;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00120}00120         \textcolor{keywordtype}{int} \_max = MAX(col, row);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00121}00121         cv::Mat result = cv::Mat::zeros(\_max, \_max, CV\_8UC3);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00123}00123         source.copyTo(result(cv::Rect(0, 0, col, row)));}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00124}00124         \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00125}00125     \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00126}00126 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00139}00139     \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\_RESULT}}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00140}\mbox{\hyperlink{classkilolib_1_1_yolo_detector_a7ad702473670a7b5642cdd6f28ce448e}{00140}}     \mbox{\hyperlink{classkilolib_1_1_yolo_detector_a7ad702473670a7b5642cdd6f28ce448e}{YoloDetector::\_createInputBlob}}(\textcolor{keyword}{const} cv::Mat \&inFrame, cv::Mat \&outBlob, \textcolor{keywordtype}{float} \&outXFactor, \textcolor{keywordtype}{float} \&outYFactor) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00141}00141         \textcolor{comment}{//change the format of and NN}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00142}00142         \textcolor{keyword}{auto} input\_image = \mbox{\hyperlink{classkilolib_1_1_yolo_detector_ab59b36f969cdd0b5a27dca5dd0f1e943}{\_format}}(inFrame);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00144}00144         \textcolor{comment}{// create BLOB, set it as Net input and try to find Kilobots}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00145}00145         cv::dnn::blobFromImage(input\_image, outBlob, 1. / 255., cv::Size(INPUT\_WIDTH, INPUT\_HEIGHT), cv::Scalar(), \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00146}00146                                \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00147}00147         \textcolor{keywordflow}{if} (outBlob.empty()) \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a0b3aac4fd6ec9ff61a499a2cee1fd398}{YD\_RESULT::YD\_ERROR}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00149}00149         outXFactor = (float) input\_image.cols / INPUT\_WIDTH;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00150}00150         outYFactor = (\textcolor{keywordtype}{float}) input\_image.rows / INPUT\_HEIGHT;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00151}00151 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00152}00152         \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a40cb362812bedb7a0c61726590f62e23}{YD\_RESULT::YD\_OK}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00153}00153     \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00168}00168     \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\_RESULT}}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00169}\mbox{\hyperlink{classkilolib_1_1_yolo_detector_aa2132fd9cb8756953068153ec50c11f4}{00169}}     \mbox{\hyperlink{classkilolib_1_1_yolo_detector_aa2132fd9cb8756953068153ec50c11f4}{YoloDetector::\_parseNNResults}}(\textcolor{keyword}{const} std::vector<std::vector<Mat>> \&nnOutput, std::vector<float> \&confidences,}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00170}00170                                   std::vector<cv::Rect> \&boxes, \textcolor{keywordtype}{int} resultRows, \textcolor{keywordtype}{float} xScale,}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00171}00171                                   \textcolor{keywordtype}{float} yScale, \textcolor{keywordtype}{float} scoreVal, \textcolor{keywordtype}{float} confVal) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00172}00172         \textcolor{comment}{//iterate over the data}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00173}00173         \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto} \&layer: nnOutput) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00174}00174             \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto} \&result: layer) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00175}00175                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < resultRows; ++i) \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00176}00176 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00177}00177                     \textcolor{comment}{// [0, 1,   2,      3,        4,       5]}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00178}00178                     \textcolor{comment}{// [x, y, width, height, confidence, score]}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00179}00179                     \textcolor{keyword}{struct }tPredict \{}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00180}00180                         \textcolor{keywordtype}{float} x;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00181}00181                         \textcolor{keywordtype}{float} y;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00182}00182                         \textcolor{keywordtype}{float} width;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00183}00183                         \textcolor{keywordtype}{float} height;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00184}00184                         \textcolor{keywordtype}{float} confidence;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00185}00185                         \textcolor{keywordtype}{float} score;}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00186}00186                     \};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00187}00187                     \textcolor{keyword}{static\_assert}(\textcolor{keyword}{sizeof}(tPredict) == (\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}) * 6));}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00189}00189                     tPredict prediction = result.at<tPredict>(i);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00190}00190                     \textcolor{keywordflow}{if} ((prediction.confidence >= confVal) \&\&}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00191}00191                         (prediction.score > scoreVal)) \{ \textcolor{comment}{// data[5] == kilobot score}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00192}00192                         confidences.push\_back(prediction.confidence);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00193}00193                         \textcolor{keyword}{auto} left = int((prediction.x -\/ 0.5 * prediction.width) * xScale);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00194}00194                         \textcolor{keyword}{auto} top = int((prediction.y -\/ 0.5 * prediction.height) * yScale);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00195}00195                         \textcolor{keyword}{auto} width = int(prediction.width * xScale);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00196}00196                         \textcolor{keyword}{auto} height = int(prediction.height * yScale);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00197}00197                         boxes.emplace\_back(left, top, width, height);}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00198}00198                     \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00199}00199                 \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00200}00200             \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00201}00201         \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00202}00202 }
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00203}00203         \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a0b3aac4fd6ec9ff61a499a2cee1fd398}{YD\_RESULT::YD\_ERROR}};}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00204}00204     \}}
+\DoxyCodeLine{\Hypertarget{yolo__detector_8cpp_source_l00205}00205 \}}
+
+\end{DoxyCode}

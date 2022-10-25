@@ -1,0 +1,28 @@
+\hypertarget{kilobot_8h_source}{}\doxysection{kilobot.\+h}
+\label{kilobot_8h_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/include/kilobot.h@{/Users/peterjanku/SourcesCpp/Kilolib/include/kilobot.h}}
+\mbox{\hyperlink{kilobot_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00003}00003 \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00011}00011 \textcolor{preprocessor}{\#include "{}opencv2/opencv.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00013}00013 \textcolor{keyword}{using namespace }cv;}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00015}00015 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}} \{}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00017}\mbox{\hyperlink{structkilolib_1_1_kilobot}{00017}}     \textcolor{keyword}{struct }\mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00018}00018     \{}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00019}\mbox{\hyperlink{structkilolib_1_1_kilobot_a7126878de66a46545b9d5c65530017d6}{00019}}         \textcolor{keywordtype}{float} \mbox{\hyperlink{structkilolib_1_1_kilobot_a7126878de66a46545b9d5c65530017d6}{confidence}}; }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00020}\mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{00020}}         Rect \mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{box}}; }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00021}\mbox{\hyperlink{structkilolib_1_1_kilobot_aba602b6d1a9429365df324ef2602509a}{00021}}         \textcolor{keywordtype}{int} \mbox{\hyperlink{structkilolib_1_1_kilobot_aba602b6d1a9429365df324ef2602509a}{id}}; }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00022}\mbox{\hyperlink{structkilolib_1_1_kilobot_a6b0996d5325ab0aa7d847d59b30e97aa}{00022}}         \textcolor{keywordtype}{int} \mbox{\hyperlink{structkilolib_1_1_kilobot_a6b0996d5325ab0aa7d847d59b30e97aa}{undetected}}; }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00023}\mbox{\hyperlink{structkilolib_1_1_kilobot_a0512559223d34f50c4d8629abfc44aed}{00023}}         std::vector<Point> \mbox{\hyperlink{structkilolib_1_1_kilobot_a0512559223d34f50c4d8629abfc44aed}{led}}; }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00024}\mbox{\hyperlink{structkilolib_1_1_kilobot_af1946f0565b089b174eb8de1970463b9}{00024}}         std::vector<Point> \mbox{\hyperlink{structkilolib_1_1_kilobot_af1946f0565b089b174eb8de1970463b9}{trajectory}}; }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00025}\mbox{\hyperlink{structkilolib_1_1_kilobot_ac42b29bbf885dbb9a6d03ead01ba646b}{00025}}         Scalar \mbox{\hyperlink{structkilolib_1_1_kilobot_ac42b29bbf885dbb9a6d03ead01ba646b}{color}}; }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00026}\mbox{\hyperlink{structkilolib_1_1_kilobot_a48e88dcc80da8ff17e25894e3946e546}{00026}}         Scalar \mbox{\hyperlink{structkilolib_1_1_kilobot_a48e88dcc80da8ff17e25894e3946e546}{LEDcolor}}; }
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00027}\mbox{\hyperlink{structkilolib_1_1_kilobot_a00c5eed6fc181101e17fd78744465222}{00027}}         Point \mbox{\hyperlink{structkilolib_1_1_kilobot_a00c5eed6fc181101e17fd78744465222}{center}}() \{ \textcolor{keywordflow}{return} Point(\mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{box}}.x + \mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{box}}.width / 2, \mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{box}}.y + \mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{box}}.height / 2); \}}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00028}00028     \};}
+\DoxyCodeLine{\Hypertarget{kilobot_8h_source_l00029}00029 \}}
+
+\end{DoxyCode}

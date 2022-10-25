@@ -1,0 +1,247 @@
+\hypertarget{classkilolib_1_1_yolo_detector}{}\doxysection{kilolib\+::Yolo\+Detector Class Reference}
+\label{classkilolib_1_1_yolo_detector}\index{kilolib::YoloDetector@{kilolib::YoloDetector}}
+
+
+{\ttfamily \#include $<$yolo\+\_\+detector.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classkilolib_1_1_yolo_detector_a19e1e020b3a69c506f142679ddeae6e2}{Yolo\+Detector}} (const std\+::string \&file\+Name=\char`\"{}\char`\"{}, bool is\+\_\+cuda=false)
+\begin{DoxyCompactList}\small\item\em Default constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} \mbox{\hyperlink{classkilolib_1_1_yolo_detector_a8b0bb633821196f17f4fb9907b909e30}{Load\+Net}} (const std\+::string \&path\+To\+File, bool is\+\_\+cuda)
+\begin{DoxyCompactList}\small\item\em Loads model from path and determinates running on CPU or GPU. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} \mbox{\hyperlink{classkilolib_1_1_yolo_detector_aeb6c8e4c28095adf29de99235ba3b3ca}{Detect}} (const cv\+::\+Mat \&frame, std\+::vector$<$ \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} $>$ \&output, float score\+Val, float conf\+Val, float nms\+Val)
+\begin{DoxyCompactList}\small\item\em Method used for \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} detection in frame. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classkilolib_1_1_yolo_detector_a0bd0d1dc81c6fbf3f163adf93fef8142}{is\+Loaded}} () const
+\begin{DoxyCompactList}\small\item\em Check if some network is loaded or not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} \mbox{\hyperlink{classkilolib_1_1_yolo_detector_a7ad702473670a7b5642cdd6f28ce448e}{\+\_\+create\+Input\+Blob}} (const cv\+::\+Mat \&in\+Frame, cv\+::\+Mat \&out\+Blob, float \&out\+XFactor, float \&out\+YFactor)
+\begin{DoxyCompactList}\small\item\em Prepare input blob for a NN. \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} \mbox{\hyperlink{classkilolib_1_1_yolo_detector_aa2132fd9cb8756953068153ec50c11f4}{\+\_\+parse\+NNResults}} (const std\+::vector$<$ std\+::vector$<$ Mat $>$ $>$ \&nn\+Output, std\+::vector$<$ float $>$ \&confidences, std\+::vector$<$ cv\+::\+Rect $>$ \&boxes, int result\+Rows, float x\+Scale, float y\+Scale, float score\+Val, float conf\+Val)
+\begin{DoxyCompactList}\small\item\em Parse an output form DNN to a set of boxes and confidences. \end{DoxyCompactList}\item 
+static cv\+::\+Mat \mbox{\hyperlink{classkilolib_1_1_yolo_detector_ab59b36f969cdd0b5a27dca5dd0f1e943}{\+\_\+format}} (const cv\+::\+Mat \&source)
+\begin{DoxyCompactList}\small\item\em Convert input frame into a squared frame (missing pixels are set to 0 values) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8h_source_l00034}{34}} of file \mbox{\hyperlink{yolo__detector_8h_source}{yolo\+\_\+detector.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classkilolib_1_1_yolo_detector_a19e1e020b3a69c506f142679ddeae6e2}\label{classkilolib_1_1_yolo_detector_a19e1e020b3a69c506f142679ddeae6e2}} 
+\index{kilolib::YoloDetector@{kilolib::YoloDetector}!YoloDetector@{YoloDetector}}
+\index{YoloDetector@{YoloDetector}!kilolib::YoloDetector@{kilolib::YoloDetector}}
+\doxysubsubsection{\texorpdfstring{YoloDetector()}{YoloDetector()}}
+{\footnotesize\ttfamily kilolib\+::\+Yolo\+Detector\+::\+Yolo\+Detector (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{file\+Name = {\ttfamily \char`\"{}\char`\"{}},  }\item[{bool}]{is\+\_\+cuda = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Default constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Name of the file representing net structure \\
+\hline
+{\em is\+\_\+cuda} & True if CUDA execution need to be run. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{yolo__detector_8cpp_source}{yolo\+\_\+detector.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classkilolib_1_1_yolo_detector_a7ad702473670a7b5642cdd6f28ce448e}\label{classkilolib_1_1_yolo_detector_a7ad702473670a7b5642cdd6f28ce448e}} 
+\index{kilolib::YoloDetector@{kilolib::YoloDetector}!\_createInputBlob@{\_createInputBlob}}
+\index{\_createInputBlob@{\_createInputBlob}!kilolib::YoloDetector@{kilolib::YoloDetector}}
+\doxysubsubsection{\texorpdfstring{\_createInputBlob()}{\_createInputBlob()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} kilolib\+::\+Yolo\+Detector\+::\+\_\+create\+Input\+Blob (\begin{DoxyParamCaption}\item[{const cv\+::\+Mat \&}]{in\+Frame,  }\item[{cv\+::\+Mat \&}]{out\+Blob,  }\item[{float \&}]{out\+XFactor,  }\item[{float \&}]{out\+YFactor }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+Prepare input blob for a NN. 
+
+This function takes input frame and perform all necessary operation in order to create an input blob for NN. At first, the image is extended to be square image. Next, the image is converted to a DNN blob (scaled to a correct size and input colors are swapped from BGR to RGB). Finally, the scale factors are computed in order to reconstruct original position and scale of detected objects. 
+\begin{DoxyParams}{Parameters}
+{\em in\+Frame} & Input frame in form of BGR \\
+\hline
+{\em out\+Blob} & Output DNN blob \\
+\hline
+{\em out\+XFactor} & X scale factor \\
+\hline
+{\em out\+YFactor} & Y scale factor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result information 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8cpp_source_l00140}{140}} of file \mbox{\hyperlink{yolo__detector_8cpp_source}{yolo\+\_\+detector.\+cpp}}.
+
+\mbox{\Hypertarget{classkilolib_1_1_yolo_detector_ab59b36f969cdd0b5a27dca5dd0f1e943}\label{classkilolib_1_1_yolo_detector_ab59b36f969cdd0b5a27dca5dd0f1e943}} 
+\index{kilolib::YoloDetector@{kilolib::YoloDetector}!\_format@{\_format}}
+\index{\_format@{\_format}!kilolib::YoloDetector@{kilolib::YoloDetector}}
+\doxysubsubsection{\texorpdfstring{\_format()}{\_format()}}
+{\footnotesize\ttfamily cv\+::\+Mat kilolib\+::\+Yolo\+Detector\+::\+\_\+format (\begin{DoxyParamCaption}\item[{const cv\+::\+Mat \&}]{source }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+Convert input frame into a squared frame (missing pixels are set to 0 values) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em source} & Original frame \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Squared version of the frame 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8cpp_source_l00117}{117}} of file \mbox{\hyperlink{yolo__detector_8cpp_source}{yolo\+\_\+detector.\+cpp}}.
+
+\mbox{\Hypertarget{classkilolib_1_1_yolo_detector_aa2132fd9cb8756953068153ec50c11f4}\label{classkilolib_1_1_yolo_detector_aa2132fd9cb8756953068153ec50c11f4}} 
+\index{kilolib::YoloDetector@{kilolib::YoloDetector}!\_parseNNResults@{\_parseNNResults}}
+\index{\_parseNNResults@{\_parseNNResults}!kilolib::YoloDetector@{kilolib::YoloDetector}}
+\doxysubsubsection{\texorpdfstring{\_parseNNResults()}{\_parseNNResults()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} kilolib\+::\+Yolo\+Detector\+::\+\_\+parse\+NNResults (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ Mat $>$ $>$ \&}]{nn\+Output,  }\item[{std\+::vector$<$ float $>$ \&}]{confidences,  }\item[{std\+::vector$<$ cv\+::\+Rect $>$ \&}]{boxes,  }\item[{int}]{result\+Rows,  }\item[{float}]{x\+Scale,  }\item[{float}]{y\+Scale,  }\item[{float}]{score\+Val,  }\item[{float}]{conf\+Val }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+Parse an output form DNN to a set of boxes and confidences. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nn\+Output} & the set of vectors representing output from DNN network \\
+\hline
+{\em confidences} & output vector of confidence numbers \\
+\hline
+{\em boxes} & output vector of detected objects boundary boxes \\
+\hline
+{\em result\+Rows} & number of suspected row in the DNN output \\
+\hline
+{\em x\+Scale} & x scale factor \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classkilolib_1_1_yolo_detector_a7ad702473670a7b5642cdd6f28ce448e}{\+\_\+create\+Input\+Blob}} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em y\+Scale} & y scale factor \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classkilolib_1_1_yolo_detector_a7ad702473670a7b5642cdd6f28ce448e}{\+\_\+create\+Input\+Blob}} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em score\+Val} & required score value (only higher values will be accepted) \\
+\hline
+{\em conf\+Val} & required confidence value (only higher or equal values will be accepted) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result information 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8cpp_source_l00169}{169}} of file \mbox{\hyperlink{yolo__detector_8cpp_source}{yolo\+\_\+detector.\+cpp}}.
+
+\mbox{\Hypertarget{classkilolib_1_1_yolo_detector_aeb6c8e4c28095adf29de99235ba3b3ca}\label{classkilolib_1_1_yolo_detector_aeb6c8e4c28095adf29de99235ba3b3ca}} 
+\index{kilolib::YoloDetector@{kilolib::YoloDetector}!Detect@{Detect}}
+\index{Detect@{Detect}!kilolib::YoloDetector@{kilolib::YoloDetector}}
+\doxysubsubsection{\texorpdfstring{Detect()}{Detect()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} kilolib\+::\+Yolo\+Detector\+::\+Detect (\begin{DoxyParamCaption}\item[{const cv\+::\+Mat \&}]{frame,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} $>$ \&}]{output,  }\item[{float}]{score,  }\item[{float}]{conf,  }\item[{float}]{nms }\end{DoxyParamCaption})}
+
+
+
+Method used for \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} detection in frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Frame used for detection. \\
+\hline
+{\em output} & Vector in which detections will be stored. \\
+\hline
+{\em score\+Val} & Minimum value for kilobot score. Values greater than this are considered to be Kilobots. \\
+\hline
+{\em conf\+Val} & Minimum value for confidence used by Net. Values greater than this are considered to be objects. \\
+\hline
+{\em nms\+Val} & Value usedfor non-\/maximum suppression.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result information 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8cpp_source_l00068}{68}} of file \mbox{\hyperlink{yolo__detector_8cpp_source}{yolo\+\_\+detector.\+cpp}}.
+
+\mbox{\Hypertarget{classkilolib_1_1_yolo_detector_a0bd0d1dc81c6fbf3f163adf93fef8142}\label{classkilolib_1_1_yolo_detector_a0bd0d1dc81c6fbf3f163adf93fef8142}} 
+\index{kilolib::YoloDetector@{kilolib::YoloDetector}!isLoaded@{isLoaded}}
+\index{isLoaded@{isLoaded}!kilolib::YoloDetector@{kilolib::YoloDetector}}
+\doxysubsubsection{\texorpdfstring{isLoaded()}{isLoaded()}}
+{\footnotesize\ttfamily bool kilolib\+::\+Yolo\+Detector\+::is\+Loaded (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Check if some network is loaded or not. 
+
+\begin{DoxyReturn}{Returns}
+True if the network is correctly loaded, false otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8h_source_l00048}{48}} of file \mbox{\hyperlink{yolo__detector_8h_source}{yolo\+\_\+detector.\+h}}.
+
+\mbox{\Hypertarget{classkilolib_1_1_yolo_detector_a8b0bb633821196f17f4fb9907b909e30}\label{classkilolib_1_1_yolo_detector_a8b0bb633821196f17f4fb9907b909e30}} 
+\index{kilolib::YoloDetector@{kilolib::YoloDetector}!LoadNet@{LoadNet}}
+\index{LoadNet@{LoadNet}!kilolib::YoloDetector@{kilolib::YoloDetector}}
+\doxysubsubsection{\texorpdfstring{LoadNet()}{LoadNet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} kilolib\+::\+Yolo\+Detector\+::\+Load\+Net (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{path\+To\+File,  }\item[{bool}]{is\+\_\+cuda }\end{DoxyParamCaption})}
+
+
+
+Loads model from path and determinates running on CPU or GPU. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path\+To\+File} & Relative path to file with pretrained YOLOV5 model. \\
+\hline
+{\em is\+\_\+cuda} & If true, function tries to run Net with CUDA backend.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Result information 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{yolo__detector_8cpp_source}{yolo\+\_\+detector.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/peterjanku/\+Sources\+Cpp/\+Kilolib/include/\mbox{\hyperlink{yolo__detector_8h}{yolo\+\_\+detector.\+h}}\item 
+/\+Users/peterjanku/\+Sources\+Cpp/\+Kilolib/src/\mbox{\hyperlink{yolo__detector_8cpp}{yolo\+\_\+detector.\+cpp}}\end{DoxyCompactItemize}

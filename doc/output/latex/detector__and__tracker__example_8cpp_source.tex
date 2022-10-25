@@ -1,0 +1,118 @@
+\hypertarget{detector__and__tracker__example_8cpp_source}{}\doxysection{detector\+\_\+and\+\_\+tracker\+\_\+example.\+cpp}
+\label{detector__and__tracker__example_8cpp_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/examples/detector\_and\_tracker/detector\_and\_tracker\_example.cpp@{/Users/peterjanku/SourcesCpp/Kilolib/examples/detector\_and\_tracker/detector\_and\_tracker\_example.cpp}}
+\mbox{\hyperlink{detector__and__tracker__example_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00001}00001 \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00010}00010 \textcolor{preprocessor}{\#include <opencv2/imgproc.hpp>}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00011}00011 \textcolor{preprocessor}{\#include <opencv2/highgui.hpp>}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{kilobot_8h}{kilobot.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00014}00014 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{euclidian__tracker_8h}{euclidian\_tracker.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00015}00015 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{yolo__detector_8h}{yolo\_detector.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00016}00016 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{kilolib__functions_8h}{kilolib\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00017}00017 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{simpletracker_8h}{simpletracker.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00019}00019 \textcolor{keyword}{using namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00020}00020 \textcolor{keyword}{using namespace }cv;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00021}00021 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00023}\mbox{\hyperlink{detector__and__tracker__example_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{00023}} \textcolor{keywordtype}{int} \mbox{\hyperlink{camera__calibration__load__example_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char}** argv)}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00024}00024 \{}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00025}00025     \textcolor{comment}{// Creates YOLO detector and loads DNN model "{}best.onnx"{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00026}00026     \mbox{\hyperlink{classkilolib_1_1_yolo_detector}{YoloDetector}} detector;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00027}00027     \textcolor{keywordflow}{if} (YD\_RESULT::YD\_OK != detector.\mbox{\hyperlink{classkilolib_1_1_yolo_detector_a8b0bb633821196f17f4fb9907b909e30}{LoadNet}}(\textcolor{stringliteral}{"{}../../../utils/best.onnx"{}}, \textcolor{keyword}{false}))\{}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00028}00028         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00029}00029     \}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00031}00031     \textcolor{comment}{// Open video "{}bodyguard.mp4"{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00032}00032     cv::VideoCapture capture(\textcolor{stringliteral}{"{}../../../utils/bodyguard.mp4"{}});}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00034}00034     \textcolor{keywordflow}{if} (!capture.isOpened())}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00035}00035     \{}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00036}00036         std::cerr << \textcolor{stringliteral}{"{}Error opening video file\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00037}00037         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00038}00038     \}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00040}00040     \textcolor{comment}{// default values }}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00041}00041     \textcolor{keywordtype}{int} nms = 0;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00042}00042     \textcolor{keywordtype}{int} score = 5;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00043}00043     \textcolor{keywordtype}{int} conf = 7;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00044}00044     \textcolor{keywordtype}{int} t = 200;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00045}00045     \textcolor{keywordtype}{int} per = 50;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00047}00047     \textcolor{comment}{//create a window called "{}Controls"{} with trackbars}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00048}00048     namedWindow(\textcolor{stringliteral}{"{}Controls"{}}, WINDOW\_AUTOSIZE); }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00049}00049     createTrackbar(\textcolor{stringliteral}{"{}NMS"{}}, \textcolor{stringliteral}{"{}Controls"{}}, \&nms, 10);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00050}00050     createTrackbar(\textcolor{stringliteral}{"{}Score"{}}, \textcolor{stringliteral}{"{}Controls"{}}, \&score, 10);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00051}00051     createTrackbar(\textcolor{stringliteral}{"{}Confidence"{}}, \textcolor{stringliteral}{"{}Controls"{}}, \&conf, 10);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00052}00052     createTrackbar(\textcolor{stringliteral}{"{}Threshold"{}}, \textcolor{stringliteral}{"{}Controls"{}}, \&t, 255);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00053}00053     createTrackbar(\textcolor{stringliteral}{"{}Percentage"{}}, \textcolor{stringliteral}{"{}Controls"{}}, \&per, 50);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00055}00055     \textcolor{comment}{// vectors, where detections on current and previous frame will be stored}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00056}00056     std::vector<Kilobot> output;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00057}00057     std::vector<Kilobot> prevOutput;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00059}00059     cv::Mat frame;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00061}00061     \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker}{EuclidianTracker}} tracker;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00063}00063     \mbox{\hyperlink{classkilolib_1_1_simple_tracker}{SimpleTracker}} tr;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00065}00065     \textcolor{keywordflow}{while} (\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00066}00066         \textcolor{comment}{// read frame}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00067}00067         capture.read(frame);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00069}00069         \textcolor{keywordflow}{if} (frame.empty()) \{}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00070}00070             std::cout << \textcolor{stringliteral}{"{}End of stream\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00071}00071             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00072}00072         \}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00074}00074         \textcolor{comment}{// detect Kilobots}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00075}00075         \textcolor{keyword}{auto} start = std::chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00076}00076         detector.\mbox{\hyperlink{classkilolib_1_1_yolo_detector_aeb6c8e4c28095adf29de99235ba3b3ca}{Detect}}(frame, output, (\textcolor{keywordtype}{float}) (nms + 1) / 10, (\textcolor{keywordtype}{float}) (conf + 1) / 10, (\textcolor{keywordtype}{float}) (score + 1) / 10);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00077}00077         \textcolor{keyword}{auto} stop = std::chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00078}00078         std::chrono::duration<double> elapsed\_seconds = stop -\/ start;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00079}00079         std::cout << \textcolor{stringliteral}{"{}NN elapsed time: "{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00080}00080                   << std::chrono::duration\_cast<std::chrono::duration<float, std::milli>>(elapsed\_seconds).count()}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00081}00081                   << \textcolor{stringliteral}{"{}ms\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00084}00084         \textcolor{comment}{// track Kilobots}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00085}00085         start = std::chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00086}00086         tracker.\mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a30b405e4ef5207aee83d6db2d4a9f984}{Track}}(frame, output, prevOutput, (\textcolor{keywordtype}{double}) t + 1, per / 10);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00087}00087         stop = std::chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00088}00088         elapsed\_seconds = stop -\/ start;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00089}00089         std::cout << \textcolor{stringliteral}{"{}Euclidian tracker elapsed time: "{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00090}00090                   << std::chrono::duration\_cast<std::chrono::duration<float, std::milli>>(elapsed\_seconds).count()}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00091}00091                   << \textcolor{stringliteral}{"{}ms\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00093}00093         start = std::chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00094}00094         tr.\mbox{\hyperlink{classkilolib_1_1_simple_tracker_a5ecaf2fb99423c5e95607bd046254511}{processKilobots}}(output);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00095}00095         stop = std::chrono::steady\_clock::now();}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00096}00096         elapsed\_seconds = stop -\/ start;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00097}00097         std::cout << \textcolor{stringliteral}{"{}My tracker elapsed time: "{}}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00098}00098                   << std::chrono::duration\_cast<std::chrono::duration<float, std::milli>>(elapsed\_seconds).count()}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00099}00099                   << \textcolor{stringliteral}{"{}ms\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00101}00101         tr.\mbox{\hyperlink{classkilolib_1_1_simple_tracker_abd501707de16eae3a0d2c3499359a9aa}{drawKilobots}}(frame);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00102}00102         \textcolor{comment}{// show output}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00103}00103         imshow(\textcolor{stringliteral}{"{}output"{}}, frame);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00105}00105         \textcolor{keywordflow}{if} (cv::waitKey(1) != -\/1) \{}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00106}00106             capture.release();}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00107}00107             std::cout << \textcolor{stringliteral}{"{}finished by user\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00108}00108             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00109}00109         \}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00111}00111         \textcolor{comment}{// set current detections to prevOutput for calculations on next frame}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00112}00112         prevOutput = output;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00113}00113         \textcolor{comment}{// clear current detections}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00114}00114         output.clear();}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00115}00115     \}}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00117}00117     cv::waitKey(0);}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00119}00119     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{detector__and__tracker__example_8cpp_source_l00120}00120 \}}
+
+\end{DoxyCode}

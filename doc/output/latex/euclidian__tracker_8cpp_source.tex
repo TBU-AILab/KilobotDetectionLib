@@ -1,0 +1,122 @@
+\hypertarget{euclidian__tracker_8cpp_source}{}\doxysection{euclidian\+\_\+tracker.\+cpp}
+\label{euclidian__tracker_8cpp_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/src/euclidian\_tracker.cpp@{/Users/peterjanku/SourcesCpp/Kilolib/src/euclidian\_tracker.cpp}}
+\mbox{\hyperlink{euclidian__tracker_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{euclidian__tracker_8h}{euclidian\_tracker.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00003}00003 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{kilolib__functions_8h}{kilolib\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00004}00004 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00005}00005 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}} \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00006}\mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a44eb95f50ba61058284970fc4853b838}{00006}}     \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a44eb95f50ba61058284970fc4853b838}{EuclidianTracker::EuclidianTracker}}(\textcolor{keywordtype}{int} lastId, \textcolor{keywordtype}{int} maxDist, \textcolor{keywordtype}{int} maxUndetected)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00007}00007         : \_maxDist(maxDist), \_maxUndetected(maxUndetected), \_lastId(lastId)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00008}00008     \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00009}00009     \};}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00011}\mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a30b405e4ef5207aee83d6db2d4a9f984}{00011}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a30b405e4ef5207aee83d6db2d4a9f984}{EuclidianTracker::Track}}(Mat frame, std::vector<Kilobot>\& output, std::vector<Kilobot>\& prevOutput, \textcolor{keywordtype}{double} LEDthreshVal, \textcolor{keywordtype}{double} LEDPercentageVal)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00012}00012     \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00013}00013         std::vector<Kilobot> undetected;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00014}00014         \textcolor{comment}{// check every single Kilobot in vector of Kilobots found in current frame}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00015}00015         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&kilobot: output) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00016}00016             \textcolor{comment}{//auto detection = output[o];}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00017}00017             \textcolor{keyword}{auto} box = kilobot.box;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00018}00018 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00019}00019             \textcolor{comment}{// try to identify Kilobot in last detections}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00020}00020             \_findObject(frame, kilobot, prevOutput, LEDthreshVal, LEDPercentageVal);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00022}00022             \textcolor{comment}{// if Kilobot wasn't found in previous detections}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00023}00023             \textcolor{keywordflow}{if} (kilobot.id == -\/1) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00024}00024                 \textcolor{comment}{// check all Kilobots that weren't detected in previous iterations}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00025}00025                 \_findObject(frame, kilobot, \_prevUndetected, LEDthreshVal, LEDPercentageVal);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00027}00027                 \textcolor{comment}{// if even than Kilobot wasn't found, generate new ID and assign it to Kilobot}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00028}00028                 \textcolor{keywordflow}{if} (kilobot.id == -\/1) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00029}00029                     kilobot.id = \_lastId;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00030}00030                     \_lastId++;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00031}00031                 \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00032}00032             \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00033}00033         \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00035}00035         \textcolor{comment}{// take all undetected Kilobots from last iteration}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00036}00036         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} po = 0; po < prevOutput.size(); po++) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00037}00037             \textcolor{keywordflow}{if} (prevOutput[po].\textcolor{keywordtype}{id} != -\/1)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00038}00038                 undetected.push\_back(prevOutput[po]);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00039}00039         \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00041}00041         \textcolor{comment}{// take all undetected Kilobots from previous iterations}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00042}00042         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} pu = 0; pu < \_prevUndetected.size(); pu++) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00043}00043             \textcolor{keywordflow}{if} (\_prevUndetected[pu].\textcolor{keywordtype}{id} != -\/1)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00044}00044                 undetected.push\_back(\_prevUndetected[pu]);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00045}00045         \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00047}00047         \_prevUndetected.clear();}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00049}00049         \textcolor{comment}{// update number of undetected frames}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00050}00050         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} u = 0; u < undetected.size(); u++) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00051}00051             undetected[u].undetected++;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00053}00053             \textcolor{comment}{// if that number is lower than maximum allowed number of undetected frames keep Kilobot in memory, }}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00054}00054             \textcolor{comment}{// othervise it will be forgotten}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00055}00055             \textcolor{keywordflow}{if} (undetected[u].undetected < \_maxUndetected)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00056}00056                 \_prevUndetected.push\_back(undetected[u]);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00057}00057         \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00058}00058     \};}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00060}\mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a6af577a40c9862cfb2d7a0ff9ddd55e4}{00060}}     \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a6af577a40c9862cfb2d7a0ff9ddd55e4}{EuclidianTracker::Reset}}(\textcolor{keywordtype}{int} lastId, \textcolor{keywordtype}{int} maxDist, \textcolor{keywordtype}{int} maxUndetected)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00061}00061     \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00062}00062         \_lastId = lastId;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00063}00063         \_maxDist = maxDist;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00064}00064         \_maxUndetected = maxUndetected;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00065}00065         \_prevUndetected.clear();}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00066}00066     \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00068}00068     \textcolor{keywordtype}{void} EuclidianTracker::\_findObject(Mat\& frame, \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}\& obj, std::vector<Kilobot>\& objects, \textcolor{keywordtype}{double} LEDthreshVal, \textcolor{keywordtype}{double} LEDPercentageVal) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00069}00069         Rect box = obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{box}};}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00071}00071         \textcolor{comment}{// determinate center of Kilobots bounding box}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00072}00072         \textcolor{keywordtype}{int} x = box.br().x -\/ box.width / 2;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00073}00073         \textcolor{keywordtype}{int} y = box.br().y -\/ box.height / 2;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00075}00075         \textcolor{keywordtype}{double} minDistance = \_maxDist;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00076}00076         \textcolor{keywordtype}{int} index = -\/1; \textcolor{comment}{// default index -\/1 means that Kilobot wasn't found}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00078}00078         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < objects.size(); i++) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00079}00079             \textcolor{comment}{// if id is already assigned, continue with another Kilobot}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00080}00080             \textcolor{keywordflow}{if} (objects[i].\textcolor{keywordtype}{id} == -\/1)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00081}00081                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00083}00083             Rect prevR = objects[i].box;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00084}00084             Point p = Point(prevR.tl().x + prevR.width / 2, prevR.tl().y + prevR.height / 2);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00085}00085             Point q = Point(box.tl().x + box.width / 2, box.tl().y + box.height / 2);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00087}00087             \textcolor{comment}{// calculation of euclidian distance between centers of current and previous detection}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00088}00088             \textcolor{keywordtype}{double} distance = sqrt(abs(pow(q.x -\/ p.x, 2) + pow(q.y -\/ p.y, 2)));}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00090}00090             \textcolor{comment}{// if distance is lower than previously lowest distance update index and distance}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00091}00091             \textcolor{keywordflow}{if} (distance < minDistance) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00092}00092                 minDistance = distance;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00093}00093                 index = i;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00094}00094             \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00095}00095         \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00097}00097         \textcolor{comment}{// if Kilobot was found in detections}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00098}00098         \textcolor{keywordflow}{if} (index != -\/1) \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00099}00099             obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_aba602b6d1a9429365df324ef2602509a}{id}} = objects[index].id; \textcolor{comment}{//copy his ID}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00100}00100             objects[index].id = -\/1; \textcolor{comment}{// assign -\/1 and tell algorithm that this Kilobot is already assigned}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00101}00101             obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_af1946f0565b089b174eb8de1970463b9}{trajectory}} = objects[index].trajectory; \textcolor{comment}{// copy previous trajectory}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00102}00102             obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_af1946f0565b089b174eb8de1970463b9}{trajectory}}.push\_back(Point(x, y)); \textcolor{comment}{// add new trajectory point}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00104}00104             obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_a0512559223d34f50c4d8629abfc44aed}{led}} = objects[index].led; \textcolor{comment}{// copy previous LED detections}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00105}00105             obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_a0512559223d34f50c4d8629abfc44aed}{led}}.push\_back(\mbox{\hyperlink{namespacekilolib_a5c541b572c313e148d2cbc8f0e8de5d8}{findLED}}(frame, obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_a7a31c6cf9b5a8206fef79953f23f9dac}{box}}, LEDthreshVal, LEDPercentageVal)); \textcolor{comment}{// add new LED center}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00107}00107             \textcolor{comment}{// copy colors}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00108}00108             obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_ac42b29bbf885dbb9a6d03ead01ba646b}{color}} = objects[index].color;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00109}00109             obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_a48e88dcc80da8ff17e25894e3946e546}{LEDcolor}} = objects[index].LEDcolor;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00110}00110         \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00112}00112         \textcolor{comment}{// paint ID inside Kilobot bounding box }}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00113}00113         \textcolor{keywordflow}{if} (obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_aba602b6d1a9429365df324ef2602509a}{id}} != -\/1)}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00114}00114             cv::putText(frame, to\_string(obj.\mbox{\hyperlink{structkilolib_1_1_kilobot_aba602b6d1a9429365df324ef2602509a}{id}}), Point(x, y), cv::FONT\_HERSHEY\_SIMPLEX, 0.4, cv::Scalar(0, 255, 0), 2);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00115}00115     \}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8cpp_source_l00116}00116 \}}
+
+\end{DoxyCode}

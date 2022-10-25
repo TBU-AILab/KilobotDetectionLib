@@ -1,0 +1,107 @@
+\hypertarget{classkilolib_1_1_euclidian_tracker}{}\doxysection{kilolib\+::Euclidian\+Tracker Class Reference}
+\label{classkilolib_1_1_euclidian_tracker}\index{kilolib::EuclidianTracker@{kilolib::EuclidianTracker}}
+
+
+{\ttfamily \#include $<$euclidian\+\_\+tracker.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a44eb95f50ba61058284970fc4853b838}{Euclidian\+Tracker}} (int last\+Id=def\+Id, int max\+Dist=def\+Dist, int max\+Undetected=def\+Undetected)
+\begin{DoxyCompactList}\small\item\em A Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a6af577a40c9862cfb2d7a0ff9ddd55e4}{Reset}} (int last\+Id=def\+Id, int max\+Dist=def\+Dist, int max\+Undetected=def\+Undetected)
+\begin{DoxyCompactList}\small\item\em Resets all parameters to new values and CLEARS \+\_\+prev\+Undetected vector. After this function is called tracking starts from the beginning . \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a30b405e4ef5207aee83d6db2d4a9f984}{Track}} (Mat frame, std\+::vector$<$ \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} $>$ \&output, std\+::vector$<$ \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} $>$ \&prev\+Output, double LEDthresh\+Val, double LEDPercentage\+Val)
+\begin{DoxyCompactList}\small\item\em Function that tracks Kilobots in current and previous frame. It assigns IDs to newly detected Kilobots and tracks them with detections from previous frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{euclidian__tracker_8h_source_l00023}{23}} of file \mbox{\hyperlink{euclidian__tracker_8h_source}{euclidian\+\_\+tracker.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classkilolib_1_1_euclidian_tracker_a44eb95f50ba61058284970fc4853b838}\label{classkilolib_1_1_euclidian_tracker_a44eb95f50ba61058284970fc4853b838}} 
+\index{kilolib::EuclidianTracker@{kilolib::EuclidianTracker}!EuclidianTracker@{EuclidianTracker}}
+\index{EuclidianTracker@{EuclidianTracker}!kilolib::EuclidianTracker@{kilolib::EuclidianTracker}}
+\doxysubsubsection{\texorpdfstring{EuclidianTracker()}{EuclidianTracker()}}
+{\footnotesize\ttfamily kilolib\+::\+Euclidian\+Tracker\+::\+Euclidian\+Tracker (\begin{DoxyParamCaption}\item[{int}]{last\+Id = {\ttfamily defId},  }\item[{int}]{max\+Dist = {\ttfamily defDist},  }\item[{int}]{max\+Undetected = {\ttfamily defUndetected} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+A Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em last\+Id} & Number (ID) of the first tracked \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}. Will be incremented for other tracked Kilobots. \\
+\hline
+{\em max\+Dist} & Maximum distance that \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} can move between two frames. \\
+\hline
+{\em max\+Undetected} & Maximum number of frames, where \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} wasn\textquotesingle{}t detected. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{euclidian__tracker_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{euclidian__tracker_8cpp_source}{euclidian\+\_\+tracker.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classkilolib_1_1_euclidian_tracker_a6af577a40c9862cfb2d7a0ff9ddd55e4}\label{classkilolib_1_1_euclidian_tracker_a6af577a40c9862cfb2d7a0ff9ddd55e4}} 
+\index{kilolib::EuclidianTracker@{kilolib::EuclidianTracker}!Reset@{Reset}}
+\index{Reset@{Reset}!kilolib::EuclidianTracker@{kilolib::EuclidianTracker}}
+\doxysubsubsection{\texorpdfstring{Reset()}{Reset()}}
+{\footnotesize\ttfamily void kilolib\+::\+Euclidian\+Tracker\+::\+Reset (\begin{DoxyParamCaption}\item[{int}]{last\+Id = {\ttfamily defId},  }\item[{int}]{max\+Dist = {\ttfamily defDist},  }\item[{int}]{max\+Undetected = {\ttfamily defUndetected} }\end{DoxyParamCaption})}
+
+
+
+Resets all parameters to new values and CLEARS \+\_\+prev\+Undetected vector. After this function is called tracking starts from the beginning . 
+
+
+\begin{DoxyParams}{Parameters}
+{\em last\+Id} & Number (ID) of the first tracked \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}. Will be incremented for other tracked Kilobots. \\
+\hline
+{\em max\+Dist} & Maximum distance that \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} can move between two frames. \\
+\hline
+{\em max\+Undetected} & Maximum number of frames, where \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} wasn\textquotesingle{}t detected. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{euclidian__tracker_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{euclidian__tracker_8cpp_source}{euclidian\+\_\+tracker.\+cpp}}.
+
+\mbox{\Hypertarget{classkilolib_1_1_euclidian_tracker_a30b405e4ef5207aee83d6db2d4a9f984}\label{classkilolib_1_1_euclidian_tracker_a30b405e4ef5207aee83d6db2d4a9f984}} 
+\index{kilolib::EuclidianTracker@{kilolib::EuclidianTracker}!Track@{Track}}
+\index{Track@{Track}!kilolib::EuclidianTracker@{kilolib::EuclidianTracker}}
+\doxysubsubsection{\texorpdfstring{Track()}{Track()}}
+{\footnotesize\ttfamily void kilolib\+::\+Euclidian\+Tracker\+::\+Track (\begin{DoxyParamCaption}\item[{Mat}]{frame,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} $>$ \&}]{output,  }\item[{std\+::vector$<$ \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} $>$ \&}]{prev\+Output,  }\item[{double}]{LEDthresh\+Val,  }\item[{double}]{LEDPercentage\+Val }\end{DoxyParamCaption})}
+
+
+
+Function that tracks Kilobots in current and previous frame. It assigns IDs to newly detected Kilobots and tracks them with detections from previous frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Current frame. \\
+\hline
+{\em output} & Current detected Kilobots. \\
+\hline
+{\em prev\+Output} & Kilobots detected in the previous frame. \\
+\hline
+{\em LEDthresh\+Val} & Threshold value for LED detection. \\
+\hline
+{\em LEDPercentage\+Val} & Percentage value of minimum area that detected LED has to occupy. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{euclidian__tracker_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{euclidian__tracker_8cpp_source}{euclidian\+\_\+tracker.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/peterjanku/\+Sources\+Cpp/\+Kilolib/include/\mbox{\hyperlink{euclidian__tracker_8h}{euclidian\+\_\+tracker.\+h}}\item 
+/\+Users/peterjanku/\+Sources\+Cpp/\+Kilolib/src/\mbox{\hyperlink{euclidian__tracker_8cpp}{euclidian\+\_\+tracker.\+cpp}}\end{DoxyCompactItemize}

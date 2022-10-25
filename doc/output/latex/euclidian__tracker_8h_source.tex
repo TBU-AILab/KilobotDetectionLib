@@ -1,0 +1,41 @@
+\hypertarget{euclidian__tracker_8h_source}{}\doxysection{euclidian\+\_\+tracker.\+h}
+\label{euclidian__tracker_8h_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/include/euclidian\_tracker.h@{/Users/peterjanku/SourcesCpp/Kilolib/include/euclidian\_tracker.h}}
+\mbox{\hyperlink{euclidian__tracker_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00003}00003 \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00011}00011 \textcolor{preprocessor}{\#include "{}opencv2/opencv.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{kilobot_8h}{kilobot.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00015}00015 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00016}00016 \textcolor{keyword}{using namespace }cv;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00018}00018 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} defId = 1;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00019}00019 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} defDist = 30;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00020}00020 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} defUndetected = 100;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00022}00022 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}} \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00023}\mbox{\hyperlink{classkilolib_1_1_euclidian_tracker}{00023}}     \textcolor{keyword}{class }\mbox{\hyperlink{classkilolib_1_1_euclidian_tracker}{EuclidianTracker}} \{}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00024}00024     \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00032}00032         \textcolor{keyword}{explicit} \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker}{EuclidianTracker}}(\textcolor{keywordtype}{int} lastId = defId, \textcolor{keywordtype}{int} maxDist = defDist, \textcolor{keywordtype}{int} maxUndetected = defUndetected);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00042}00042         \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a6af577a40c9862cfb2d7a0ff9ddd55e4}{Reset}}(\textcolor{keywordtype}{int} lastId = defId, \textcolor{keywordtype}{int} maxDist = defDist, \textcolor{keywordtype}{int} maxUndetected = defUndetected);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00054}00054         \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker_a30b405e4ef5207aee83d6db2d4a9f984}{Track}}(Mat frame, std::vector<Kilobot>\& output, std::vector<Kilobot>\& prevOutput,}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00055}00055             \textcolor{keywordtype}{double} LEDthreshVal, \textcolor{keywordtype}{double} LEDPercentageVal);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00057}00057     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00067}00067         \textcolor{keywordtype}{void} \_findObject(Mat\& frame, \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}\& obj, std::vector<Kilobot>\& objects, \textcolor{keywordtype}{double} LEDthreshVal, \textcolor{keywordtype}{double} LEDPercentageVal);}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00069}00069     \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00071}00071         \textcolor{keywordtype}{int} \_maxDist; }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00072}00072         \textcolor{keywordtype}{int} \_maxUndetected;}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00073}00073         \textcolor{keywordtype}{int} \_lastId; }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00075}00075         std::vector<Kilobot> \_prevUndetected; }
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00076}00076     \};}
+\DoxyCodeLine{\Hypertarget{euclidian__tracker_8h_source_l00077}00077 \}}
+
+\end{DoxyCode}

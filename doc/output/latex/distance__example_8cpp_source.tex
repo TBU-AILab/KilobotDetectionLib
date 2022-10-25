@@ -1,0 +1,52 @@
+\hypertarget{distance__example_8cpp_source}{}\doxysection{distance\+\_\+example.\+cpp}
+\label{distance__example_8cpp_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/examples/distance/distance\_example.cpp@{/Users/peterjanku/SourcesCpp/Kilolib/examples/distance/distance\_example.cpp}}
+\mbox{\hyperlink{distance__example_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00001}00001 \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00010}00010 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{kilolib__functions_8h}{kilolib\_functions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00011}00011 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{camera__calibration_8h}{camera\_calibration.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00013}00013 \textcolor{keyword}{using namespace }cv;}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00014}00014 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00015}00015 \textcolor{keyword}{using namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}};}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00017}\mbox{\hyperlink{distance__example_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{00017}} \textcolor{keywordtype}{int} \mbox{\hyperlink{distance__example_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}}() \{}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00018}00018     \textcolor{comment}{// values that works with "{}images/test.png"{}}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00019}00019     \textcolor{keywordtype}{int} percentage = 20;}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00020}00020     \textcolor{keywordtype}{int} thresh = 80;}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00022}00022     \textcolor{comment}{// Creates window with TrackBars}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00023}00023     \textcolor{comment}{// trackbar percentage -\/ Part of the Image around the center, where Kilobot should be placed.}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00024}00024     \textcolor{comment}{// trackbar thresh -\/ Threshold value for findContours function.}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00025}00025     namedWindow(\textcolor{stringliteral}{"{}Tracks"{}}, WINDOW\_AUTOSIZE);}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00026}00026     createTrackbar(\textcolor{stringliteral}{"{}percentage"{}}, \textcolor{stringliteral}{"{}Tracks"{}}, \&percentage, 100);}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00027}00027     createTrackbar(\textcolor{stringliteral}{"{}threshold"{}}, \textcolor{stringliteral}{"{}Tracks"{}}, \&thresh, 255);}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00029}00029     Mat frame;}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00031}00031     \textcolor{keywordflow}{while} (\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00033}00033         \textcolor{comment}{// Part of the image should be at least 1\% -\/ to avoid crashes}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00034}00034         \textcolor{keywordflow}{if} (percentage == 0)}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00035}00035             percentage = 1;}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00037}00037         \textcolor{comment}{// Detect Kilobot in the center of "{}images/test.png"{}}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00038}00038         \textcolor{comment}{// and discard data outside center of the image except of percentage}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00039}00039         \textcolor{comment}{// then found contours with value of thresh.}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00040}00040         \textcolor{comment}{// If last param == true measureDisatnce from camera and display it}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00041}00041         \mbox{\hyperlink{namespacekilolib_ac88405f118b712db98f166369c1e6447}{centerKilobotDetection}}(frame, \textcolor{stringliteral}{"{}images/test.png"{}}, percentage, thresh, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00043}00043         \textcolor{comment}{// Display image}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00044}00044         imshow(\textcolor{stringliteral}{"{}output"{}}, frame);}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00046}00046         \textcolor{keywordflow}{if} (waitKey(1) != -\/1)}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00047}00047         \{}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00048}00048             std::cout << \textcolor{stringliteral}{"{}finished by user\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00049}00049             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00051}00051     \}}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00053}00053     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{distance__example_8cpp_source_l00054}00054 \}}
+
+\end{DoxyCode}

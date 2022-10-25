@@ -1,0 +1,59 @@
+\label{index_md__Users_peterjanku_SourcesCpp_Kilolib_README}%
+\Hypertarget{index_md__Users_peterjanku_SourcesCpp_Kilolib_README}%
+ Library containing basic functions and classes for Kilobot detection and tracking, camera calibration and distance measuring.\hypertarget{index_autotoc_md1}{}\doxysection{Implementation into your project}\label{index_autotoc_md1}
+There are two simple ways how to implement the library into your project. The whole library project is based on CMake, so you can directly use it as a CMake subproject in your application. Because the library is composed of only a few files, the files can be copied into your project separately, and any build system can be used.\hypertarget{index_autotoc_md2}{}\doxysubsection{Using CMake subproject}\label{index_autotoc_md2}
+The library can be cloned into your project structure as a subfolder. In that case, you need to append the following lines to your main CMake\+List.\+txt file.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{  \# add subdirectory and enable the library compilaction}
+\DoxyCodeLine{add\_subdirectory(kilolib)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# link library with your app and set include paths}
+\DoxyCodeLine{\# NEED TO BE PLACED AFTER  add\_executable/add\_library command }
+\DoxyCodeLine{target\_link\_libraries(\$\{CMAKE\_PROJECT\_NAME\} kilolib)}
+\DoxyCodeLine{target\_include\_directories(\$\{CMAKE\_PROJECT\_NAME\} PUBLIC [path to the lib]/include)}
+
+\end{DoxyCode}
+
+
+Moreover, the library project also contains example applications. Their compilation is disabled by default. You can enable the compilation by adding the following -\/D parameters into your cmake command.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/DBUILD\_EXAMPLES:BOOL=ON ../}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md3}{}\doxysubsection{Using only library files}\label{index_autotoc_md3}
+The library is composed of files placed in /include and /src folder. These files must be copied into your project. If you use a different folder structure, maybe the correction of include paths will be necessary.\hypertarget{index_autotoc_md4}{}\doxysection{Examples}\label{index_autotoc_md4}
+The example applications are placed in "{}/examples/ folder. Each example in specific subfolder. Compilation of examples is disabled in default. If you want to enable it you need to append following -\/D parameter into your cmake command.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake  -\/DBUILD\_EXAMPLES:BOOL=ON ../}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md5}{}\doxysubsection{Example descritipon}\label{index_autotoc_md5}
+//\+TODO\+:\hypertarget{index_autotoc_md6}{}\doxysection{Project structure}\label{index_autotoc_md6}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{..}
+\DoxyCodeLine{.}
+\DoxyCodeLine{+-\/-\/ examples \# example applications using the library}
+\DoxyCodeLine{|   +-\/-\/ calibration\_load}
+\DoxyCodeLine{|   +-\/-\/ calibration\_store}
+\DoxyCodeLine{|   +-\/-\/ detector\_and\_tracker \# most detailed example including updated tracker}
+\DoxyCodeLine{|}
+\DoxyCodeLine{+-\/-\/ include             \# libraries header files}
+\DoxyCodeLine{+-\/-\/ src                 \# libraries source files}
+\DoxyCodeLine{|}
+\DoxyCodeLine{+-\/-\/ utils   }
+\DoxyCodeLine{|   +-\/-\/ images          \# set of photos for image calibration}
+\DoxyCodeLine{|   +-\/-\/ best.onnx       \# NN (YOLOv5) Model used in examples}
+\DoxyCodeLine{|   +-\/-\/ bestCUDA.onnx   \# NN (YOLOv5) Model used in examples -\/ CUDA enabled}
+\DoxyCodeLine{|   +-\/-\/ bodyguard.mp4   \# example video of one Kilobot's experiment}
+\DoxyCodeLine{|}
+\DoxyCodeLine{+-\/-\/ CMakeLists.txt      \# the configuration the whole library}
+
+\end{DoxyCode}
+ 

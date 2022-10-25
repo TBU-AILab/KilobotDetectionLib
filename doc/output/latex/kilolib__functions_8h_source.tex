@@ -1,0 +1,24 @@
+\hypertarget{kilolib__functions_8h_source}{}\doxysection{kilolib\+\_\+functions.\+h}
+\label{kilolib__functions_8h_source}\index{/Users/peterjanku/SourcesCpp/Kilolib/include/kilolib\_functions.h@{/Users/peterjanku/SourcesCpp/Kilolib/include/kilolib\_functions.h}}
+\mbox{\hyperlink{kilolib__functions_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00003}00003 \textcolor{comment}{/*****************************************************************/}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00011}00011 \textcolor{preprocessor}{\#include "{}opencv2/opencv.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00013}00013 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00014}00014 \textcolor{keyword}{using namespace }cv;}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00016}00016 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}} \{}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00017}00017     \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} F = 1240;\textcolor{comment}{// focal length}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00018}00018     \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{double} kilobotSize = 3.3; \textcolor{comment}{// real Kilobot size in centimeters}}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00030}00030     Point \mbox{\hyperlink{namespacekilolib_a5c541b572c313e148d2cbc8f0e8de5d8}{findLED}}(Mat frame, Rect box, \textcolor{keywordtype}{double} thresh, \textcolor{keywordtype}{double} minArea);}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00041}00041     \textcolor{keywordtype}{double} \mbox{\hyperlink{namespacekilolib_a3f861165c89aa84c93634f9e57b09112}{measureDistance}}(Rect box, Mat frame, \textcolor{keywordtype}{bool} display = \textcolor{keyword}{true}, Scalar textColor = Scalar(255, 0, 255));}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00053}00053     \textcolor{keywordtype}{void} \mbox{\hyperlink{namespacekilolib_ac88405f118b712db98f166369c1e6447}{centerKilobotDetection}}(Mat\& frame, \textcolor{keywordtype}{string} imgPath, \textcolor{keywordtype}{int} percentage, \textcolor{keywordtype}{int} thresh, \textcolor{keywordtype}{bool} measureDist = \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{kilolib__functions_8h_source_l00054}00054 \}}
+
+\end{DoxyCode}

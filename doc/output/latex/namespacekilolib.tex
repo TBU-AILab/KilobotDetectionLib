@@ -1,0 +1,271 @@
+\hypertarget{namespacekilolib}{}\doxysection{kilolib Namespace Reference}
+\label{namespacekilolib}\index{kilolib@{kilolib}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classkilolib_1_1_euclidian_tracker}{Euclidian\+Tracker}}
+\item 
+struct \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}
+\item 
+class \mbox{\hyperlink{classkilolib_1_1_simple_tracker}{Simple\+Tracker}}
+\item 
+class \mbox{\hyperlink{classkilolib_1_1_yolo_detector}{Yolo\+Detector}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{YD\+\_\+\+RESULT}} \{ \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a40cb362812bedb7a0c61726590f62e23}{YD\+\_\+\+OK}}
+, \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8ad4332b7890b2ec6195346ddc00e41d4f}{YD\+\_\+\+ARGS\+\_\+\+ERROR}}
+, \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a0b3aac4fd6ec9ff61a499a2cee1fd398}{YD\+\_\+\+ERROR}}
+ \}
+\begin{DoxyCompactList}\small\item\em Result data type for functions from Yolo\+Detector class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{namespacekilolib_a38493592398c6d0936852fbd749e1e73}{Calculate\+Points}} (string folder\+Path, string suffix, int cb\+Width, int cb\+Height, vector$<$ vector$<$ Point3f $>$ $>$ \&obj\+Points, vector$<$ vector$<$ Point2f $>$ $>$ \&img\+Points, Size \&size)
+\begin{DoxyCompactList}\small\item\em Loads all image with expected suffix from folder and calculates points needed for camera calibration. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespacekilolib_ae6e910dde5c19f7363d45d7599924699}{Store\+Calibration}} (string file\+Name, Mat camera\+Matrix, Mat dist\+Coeffs)
+\begin{DoxyCompactList}\small\item\em Stores a calibration file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespacekilolib_a60fcd292cdf032a8b1f4a156130496a3}{Load\+Calibration}} (string file\+Name, Mat \&camera\+Matrix, Mat \&dist\+Coeffs)
+\begin{DoxyCompactList}\small\item\em Loads a calibration file. \end{DoxyCompactList}\item 
+Point \mbox{\hyperlink{namespacekilolib_a5c541b572c313e148d2cbc8f0e8de5d8}{find\+LED}} (Mat frame, Rect box, double thresh, double min\+Area)
+\begin{DoxyCompactList}\small\item\em Function that finds LED inside \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} bounding box. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{namespacekilolib_a3f861165c89aa84c93634f9e57b09112}{measure\+Distance}} (Rect box, Mat frame, bool display=true, Scalar text\+Color=Scalar(255, 0, 255))
+\begin{DoxyCompactList}\small\item\em Measures distance to detected \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{namespacekilolib_ac88405f118b712db98f166369c1e6447}{center\+Kilobot\+Detection}} (Mat \&frame, string img\+Path, int percentage, int thresh, bool measure\+Dist=true)
+\begin{DoxyCompactList}\small\item\em Detects single \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} in image center. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::array$<$ cv\+::\+Scalar, 11 $>$ \mbox{\hyperlink{namespacekilolib_a9cb61a95903913a5569697a71d1a5624}{colors}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}\label{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}} 
+\index{kilolib@{kilolib}!YD\_RESULT@{YD\_RESULT}}
+\index{YD\_RESULT@{YD\_RESULT}!kilolib@{kilolib}}
+\doxysubsubsection{\texorpdfstring{YD\_RESULT}{YD\_RESULT}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8}{kilolib\+::\+YD\+\_\+\+RESULT}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Result data type for functions from \mbox{\hyperlink{classkilolib_1_1_yolo_detector}{Yolo\+Detector}} class. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{YD\_OK@{YD\_OK}!kilolib@{kilolib}}\index{kilolib@{kilolib}!YD\_OK@{YD\_OK}}}\mbox{\Hypertarget{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a40cb362812bedb7a0c61726590f62e23}\label{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a40cb362812bedb7a0c61726590f62e23}} 
+YD\+\_\+\+OK&correct function execution \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{YD\_ARGS\_ERROR@{YD\_ARGS\_ERROR}!kilolib@{kilolib}}\index{kilolib@{kilolib}!YD\_ARGS\_ERROR@{YD\_ARGS\_ERROR}}}\mbox{\Hypertarget{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8ad4332b7890b2ec6195346ddc00e41d4f}\label{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8ad4332b7890b2ec6195346ddc00e41d4f}} 
+YD\+\_\+\+ARGS\+\_\+\+ERROR&unexpected or incorrect input parameters \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{YD\_ERROR@{YD\_ERROR}!kilolib@{kilolib}}\index{kilolib@{kilolib}!YD\_ERROR@{YD\_ERROR}}}\mbox{\Hypertarget{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a0b3aac4fd6ec9ff61a499a2cee1fd398}\label{namespacekilolib_aeb05d64d4a99cadceb96f5502989b4f8a0b3aac4fd6ec9ff61a499a2cee1fd398}} 
+YD\+\_\+\+ERROR&unspecified error \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{yolo__detector_8h_source_l00028}{28}} of file \mbox{\hyperlink{yolo__detector_8h_source}{yolo\+\_\+detector.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacekilolib_a38493592398c6d0936852fbd749e1e73}\label{namespacekilolib_a38493592398c6d0936852fbd749e1e73}} 
+\index{kilolib@{kilolib}!CalculatePoints@{CalculatePoints}}
+\index{CalculatePoints@{CalculatePoints}!kilolib@{kilolib}}
+\doxysubsubsection{\texorpdfstring{CalculatePoints()}{CalculatePoints()}}
+{\footnotesize\ttfamily bool kilolib\+::\+Calculate\+Points (\begin{DoxyParamCaption}\item[{string}]{folder\+Path,  }\item[{string}]{suffix,  }\item[{int}]{cb\+Width,  }\item[{int}]{cb\+Height,  }\item[{vector$<$ vector$<$ Point3f $>$ $>$ \&}]{obj\+Points,  }\item[{vector$<$ vector$<$ Point2f $>$ $>$ \&}]{img\+Points,  }\item[{Size \&}]{size }\end{DoxyParamCaption})}
+
+
+
+Loads all image with expected suffix from folder and calculates points needed for camera calibration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder\+Path} & Path to folder containing images for calibration. (Should end with character / ) \\
+\hline
+{\em suffix} & Image files suffix. (For example .jpg) \\
+\hline
+{\em cb\+Width} & Chessboard width. \\
+\hline
+{\em cb\+Height} & Chessboard height. \\
+\hline
+{\em obj\+Points} & Vector to store vectors of 3D points for each checkerboard image. \\
+\hline
+{\em img\+Points} & Vector to store vectors of 2D points for each checkerboard image. \\
+\hline
+{\em size} & Calibration image size.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns True if calculation was successful 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{camera__calibration_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{camera__calibration_8cpp_source}{camera\+\_\+calibration.\+cpp}}.
+
+\mbox{\Hypertarget{namespacekilolib_ac88405f118b712db98f166369c1e6447}\label{namespacekilolib_ac88405f118b712db98f166369c1e6447}} 
+\index{kilolib@{kilolib}!centerKilobotDetection@{centerKilobotDetection}}
+\index{centerKilobotDetection@{centerKilobotDetection}!kilolib@{kilolib}}
+\doxysubsubsection{\texorpdfstring{centerKilobotDetection()}{centerKilobotDetection()}}
+{\footnotesize\ttfamily void kilolib\+::center\+Kilobot\+Detection (\begin{DoxyParamCaption}\item[{Mat \&}]{frame,  }\item[{string}]{img\+Path,  }\item[{int}]{percentage,  }\item[{int}]{thresh,  }\item[{bool}]{measure\+Dist = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Detects single \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} in image center. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Current frame. \\
+\hline
+{\em img\+Path} & Path to image file. \\
+\hline
+{\em percentage} & The percentage portion of image around the center in which \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} will be searched. \\
+\hline
+{\em thresh} & Threshold value used for detection by find\+Contours. \\
+\hline
+{\em measure\+Dist} & True if distance should be displayed in current frame. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{kilolib__functions_8cpp_source_l00105}{105}} of file \mbox{\hyperlink{kilolib__functions_8cpp_source}{kilolib\+\_\+functions.\+cpp}}.
+
+\mbox{\Hypertarget{namespacekilolib_a5c541b572c313e148d2cbc8f0e8de5d8}\label{namespacekilolib_a5c541b572c313e148d2cbc8f0e8de5d8}} 
+\index{kilolib@{kilolib}!findLED@{findLED}}
+\index{findLED@{findLED}!kilolib@{kilolib}}
+\doxysubsubsection{\texorpdfstring{findLED()}{findLED()}}
+{\footnotesize\ttfamily Point kilolib\+::find\+LED (\begin{DoxyParamCaption}\item[{Mat}]{frame,  }\item[{Rect}]{box,  }\item[{double}]{thresh,  }\item[{double}]{min\+Area }\end{DoxyParamCaption})}
+
+
+
+Function that finds LED inside \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}} bounding box. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & Current frame. \\
+\hline
+{\em box} & Bounding nox of detected \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}. \\
+\hline
+{\em thresh} & Threshold value used for detection. \\
+\hline
+{\em min\+Area} & Minimum area -\/ percentage value in decimal of detected box.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Center point of detected LED. Returns Point(-\/1,-\/1) if LED wasn\textquotesingle{}t detected. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{kilolib__functions_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{kilolib__functions_8cpp_source}{kilolib\+\_\+functions.\+cpp}}.
+
+\mbox{\Hypertarget{namespacekilolib_a60fcd292cdf032a8b1f4a156130496a3}\label{namespacekilolib_a60fcd292cdf032a8b1f4a156130496a3}} 
+\index{kilolib@{kilolib}!LoadCalibration@{LoadCalibration}}
+\index{LoadCalibration@{LoadCalibration}!kilolib@{kilolib}}
+\doxysubsubsection{\texorpdfstring{LoadCalibration()}{LoadCalibration()}}
+{\footnotesize\ttfamily void kilolib\+::\+Load\+Calibration (\begin{DoxyParamCaption}\item[{string}]{file\+Name,  }\item[{Mat \&}]{camera\+Matrix,  }\item[{Mat \&}]{dist\+Coeffs }\end{DoxyParamCaption})}
+
+
+
+Loads a calibration file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Path to file. \\
+\hline
+{\em camera\+Matrix} & Where to store calibration matrix. \\
+\hline
+{\em dist\+Coeffs} & Where to store distortion coefficients. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{camera__calibration_8cpp_source_l00093}{93}} of file \mbox{\hyperlink{camera__calibration_8cpp_source}{camera\+\_\+calibration.\+cpp}}.
+
+\mbox{\Hypertarget{namespacekilolib_a3f861165c89aa84c93634f9e57b09112}\label{namespacekilolib_a3f861165c89aa84c93634f9e57b09112}} 
+\index{kilolib@{kilolib}!measureDistance@{measureDistance}}
+\index{measureDistance@{measureDistance}!kilolib@{kilolib}}
+\doxysubsubsection{\texorpdfstring{measureDistance()}{measureDistance()}}
+{\footnotesize\ttfamily double kilolib\+::measure\+Distance (\begin{DoxyParamCaption}\item[{Rect}]{box,  }\item[{Mat}]{frame,  }\item[{bool}]{display = {\ttfamily true},  }\item[{Scalar}]{text\+Color = {\ttfamily Scalar(255,~0,~255)} }\end{DoxyParamCaption})}
+
+
+
+Measures distance to detected \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em box} & Bounding box of detected \mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot}}. \\
+\hline
+{\em frame} & Current frame. \\
+\hline
+{\em display} & True if distance should be displayed in current frame. \\
+\hline
+{\em text\+Color} & Text color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{kilolib__functions_8cpp_source_l00070}{70}} of file \mbox{\hyperlink{kilolib__functions_8cpp_source}{kilolib\+\_\+functions.\+cpp}}.
+
+\mbox{\Hypertarget{namespacekilolib_ae6e910dde5c19f7363d45d7599924699}\label{namespacekilolib_ae6e910dde5c19f7363d45d7599924699}} 
+\index{kilolib@{kilolib}!StoreCalibration@{StoreCalibration}}
+\index{StoreCalibration@{StoreCalibration}!kilolib@{kilolib}}
+\doxysubsubsection{\texorpdfstring{StoreCalibration()}{StoreCalibration()}}
+{\footnotesize\ttfamily void kilolib\+::\+Store\+Calibration (\begin{DoxyParamCaption}\item[{string}]{file\+Name,  }\item[{Mat}]{camera\+Matrix,  }\item[{Mat}]{dist\+Coeffs }\end{DoxyParamCaption})}
+
+
+
+Stores a calibration file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & Path to file. \\
+\hline
+{\em camera\+Matrix} & Calibration matrix. \\
+\hline
+{\em dist\+Coeffs} & Distortion coefficients. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{camera__calibration_8cpp_source_l00086}{86}} of file \mbox{\hyperlink{camera__calibration_8cpp_source}{camera\+\_\+calibration.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacekilolib_a9cb61a95903913a5569697a71d1a5624}\label{namespacekilolib_a9cb61a95903913a5569697a71d1a5624}} 
+\index{kilolib@{kilolib}!colors@{colors}}
+\index{colors@{colors}!kilolib@{kilolib}}
+\doxysubsubsection{\texorpdfstring{colors}{colors}}
+{\footnotesize\ttfamily const std\+::array$<$cv\+::\+Scalar, 11$>$ kilolib\+::colors}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{}
+\DoxyCodeLine{            cv::Scalar(\{255, 204, 153\}),}
+\DoxyCodeLine{            cv::Scalar(\{204, 153, 255\}),}
+\DoxyCodeLine{            cv::Scalar(\{255, 153, 204\}),}
+\DoxyCodeLine{            cv::Scalar(\{153, 204, 255\}),}
+\DoxyCodeLine{            cv::Scalar(\{255, 102, 51\}),}
+\DoxyCodeLine{            cv::Scalar(\{204, 204, 51\}),}
+\DoxyCodeLine{            cv::Scalar(\{255, 102, 51\}),}
+\DoxyCodeLine{            cv::Scalar(\{204, 204, 51\}),}
+\DoxyCodeLine{            cv::Scalar(\{0, 204, 153\}),}
+\DoxyCodeLine{            cv::Scalar(\{255, 204, 0\}),}
+\DoxyCodeLine{            cv::Scalar(\{255, 153, 0\})}
+\DoxyCodeLine{    \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{simpletracker_8h_source_l00018}{18}} of file \mbox{\hyperlink{simpletracker_8h_source}{simpletracker.\+h}}.
+
