@@ -36,6 +36,10 @@ enable the compilation by adding the following -D parameters into your cmake com
 The library is composed of files placed in /include and /src folder. These files must be copied into your project.
 If you use a different folder structure, maybe the correction of include paths will be necessary.
 
+## Lib Doxygen documentation
+
+<https://tbu-ailab.github.io/Kilolib/doc/output/html/>
+
 ## Examples
 
 The example applications are placed in "/examples/ folder. Each example in specific subfolder. Compilation of examples
