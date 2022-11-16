@@ -8,4 +8,4 @@ add_executable(CalibrationLoadingExample camera_calibration_load_example.cpp)
 
 target_include_directories(CalibrationLoadingExample PRIVATE ${YOUR_DIRECTORY} ../../include  ${OpenCV_INCLUDE_DIRS})
 target_link_libraries( CalibrationLoadingExample ${OpenCV_LIBS} )
-target_link_libraries( CalibrationLoadingExample kilolib )
+target_link_libraries( CalibrationLoadingExample Kilobot_detection_library )

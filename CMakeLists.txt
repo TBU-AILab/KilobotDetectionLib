@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(kilolib)
+project(Kilobot_detection_library)
 
 option(BUILD_EXAMPLES "Compile all examples" OFF)
 

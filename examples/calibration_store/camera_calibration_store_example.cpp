@@ -10,7 +10,7 @@
 
 using namespace cv;
 using namespace std;
-using namespace kilolib;
+using namespace Kilobot_detection_library;
 
 int main()
 {

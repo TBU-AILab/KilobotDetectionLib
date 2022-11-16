@@ -16,11 +16,11 @@ lines to your main CMakeList.txt file.
 
 ```cmake
   # add subdirectory and enable the library compilaction
-add_subdirectory(kilolib)
+add_subdirectory(Kilobot_detection_library)
 
 # link library with your app and set include paths
 # NEED TO BE PLACED AFTER  add_executable/add_library command 
-target_link_libraries(${CMAKE_PROJECT_NAME} kilolib)
+target_link_libraries(${CMAKE_PROJECT_NAME} Kilobot_detection_library)
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC [path to the lib]/include)
 ```
 

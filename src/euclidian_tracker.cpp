@@ -2,7 +2,7 @@
 
 #include "kilolib_functions.h"
 
-namespace kilolib {
+namespace Kilobot_detection_library {
     EuclidianTracker::EuclidianTracker(int lastId, int maxDist, int maxUndetected)
         : _maxDist(maxDist), _maxUndetected(maxUndetected), _lastId(lastId)
     {

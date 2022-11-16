@@ -2,7 +2,7 @@
 
 /*****************************************************************//**
  * @file   kilolib_functions.h
- * @brief  Helpful functions for kilolib library.
+ * @brief  Helpful functions for Kilobot_detection_library library.
  *
  * @author Petr Svoboda
  * @date   May 2022
@@ -13,7 +13,7 @@
 using namespace std;
 using namespace cv;
 
-namespace kilolib {
+namespace Kilobot_detection_library {
     static const double F = 1240;// focal length
     static const double kilobotSize = 3.3; // real Kilobot size in centimeters
 

@@ -29,7 +29,7 @@ int main(int argc, char** argv)
     }
 
     // Open video "bodyguard.mp4"
-    cv::VideoCapture capture("../../../utils/bodyguard.mp4");
+    cv::VideoCapture capture(0);
 
     if (!capture.isOpened())
     {

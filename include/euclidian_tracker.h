@@ -19,7 +19,7 @@ static const int defId = 1;
 static const int defDist = 30;
 static const int defUndetected = 100;
 
-namespace kilolib {
+namespace Kilobot_detection_library {
     class EuclidianTracker {
     public:
         /**

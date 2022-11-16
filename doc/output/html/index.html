@@ -80,11 +80,11 @@ Implementation into your project</h1>
 Using CMake subproject</h2>
 <p >The library can be cloned into your project structure as a subfolder. In that case, you need to append the following lines to your main CMakeList.txt file.</p>
 <div class="fragment"><div class="line">  # add subdirectory and enable the library compilaction</div>
-<div class="line">add_subdirectory(kilolib)</div>
+<div class="line">add_subdirectory(Kilobot_detection_library)</div>
 <div class="line"> </div>
 <div class="line"># link library with your app and set include paths</div>
 <div class="line"># NEED TO BE PLACED AFTER  add_executable/add_library command </div>
-<div class="line">target_link_libraries(${CMAKE_PROJECT_NAME} kilolib)</div>
+<div class="line">target_link_libraries(${CMAKE_PROJECT_NAME} Kilobot_detection_library)</div>
 <div class="line">target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC [path to the lib]/include)</div>
 </div><!-- fragment --><p >Moreover, the library project also contains example applications. Their compilation is disabled by default. You can enable the compilation by adding the following -D parameters into your cmake command.</p>
 <div class="fragment"><div class="line">cmake -DBUILD_EXAMPLES:BOOL=ON ../</div>

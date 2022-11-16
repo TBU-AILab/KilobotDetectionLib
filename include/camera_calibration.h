@@ -13,7 +13,7 @@
 using namespace cv;
 using namespace std;
 
-namespace kilolib {
+namespace Kilobot_detection_library {
 
     /**
      * @brief Loads all image with expected suffix from folder and calculates points needed for camera calibration.

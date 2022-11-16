@@ -2,7 +2,7 @@
 
 #include <random>
 
-namespace kilolib {
+namespace Kilobot_detection_library {
 
 
     /**

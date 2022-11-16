@@ -1,6 +1,6 @@
 #include "kilolib_functions.h"
 
-namespace kilolib {
+namespace Kilobot_detection_library {
 
     Point findLED(Mat frame, Rect box, double thresh, double minArea)
     {
