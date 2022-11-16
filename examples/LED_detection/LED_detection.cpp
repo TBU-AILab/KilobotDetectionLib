@@ -75,13 +75,18 @@ int main(int argc, char** argv)
         auto start = std::chrono::steady_clock::now();
         detector.Detect(frame, output, (float) (nms + 1) / 10, (float) (conf + 1) / 10, (float) (score + 1) / 10);
         auto stop = std::chrono::steady_clock::now();
+
+    /*
         std::chrono::duration<double> elapsed_seconds = stop - start;
         std::cout << "NN elapsed time: "
                   << std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(elapsed_seconds).count()
                   << "ms\n";
+    */
 
 
-        // track Kilobots
+     /*   OLD approach via the Euclidian tracker
+
+      // track Kilobots
         start = std::chrono::steady_clock::now();
         tracker.Track(frame, output, prevOutput, (double) t + 1, per / 10);
         stop = std::chrono::steady_clock::now();
@@ -89,7 +94,8 @@ int main(int argc, char** argv)
         std::cout << "Euclidian tracker elapsed time: "
                   << std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(elapsed_seconds).count()
                   << "ms\n";
-
+     */
+     /*
         start = std::chrono::steady_clock::now();
         tr.processKilobots(output);
         stop = std::chrono::steady_clock::now();
@@ -97,10 +103,12 @@ int main(int argc, char** argv)
         std::cout << "My tracker elapsed time: "
                   << std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(elapsed_seconds).count()
                   << "ms\n";
-
+     */
+        tr.processKilobots(output);
         tr.drawKilobots(frame);
         // show output
         imshow("output", frame);
+       // imshow("test", output[0]);
 
         if (cv::waitKey(1) != -1) {
             capture.release();
