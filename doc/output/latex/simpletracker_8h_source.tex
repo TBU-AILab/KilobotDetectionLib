@@ -17,7 +17,7 @@
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00013}00013 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{kilobot_8h}{kilobot.h}}"{}}}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00014}00014 \textcolor{preprocessor}{\#include "{}opencv2/opencv.hpp"{}}}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00015}00015 }
-\DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00016}00016 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{kilolib}} \{}
+\DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00016}00016 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacekilolib}{Kilobot_detection_library}} \{}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00017}00017 }
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00018}\mbox{\hyperlink{namespacekilolib_a9cb61a95903913a5569697a71d1a5624}{00018}}     \textcolor{keyword}{const} std::array<cv::Scalar, 11> \mbox{\hyperlink{namespacekilolib_a9cb61a95903913a5569697a71d1a5624}{colors}} = \{}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00019}00019             cv::Scalar(\{255, 204, 153\}),}
@@ -36,11 +36,11 @@
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00032}00032 }
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00033}\mbox{\hyperlink{classkilolib_1_1_simple_tracker}{00033}}     \textcolor{keyword}{class }\mbox{\hyperlink{classkilolib_1_1_simple_tracker}{SimpleTracker}} \{}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00034}00034     \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00035}00035         \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_simple_tracker_a326da268d437df3fbac9edf9006d3ef0}{processKilobot}}(\mbox{\hyperlink{structkilolib_1_1_kilobot}{kilolib::Kilobot}} \&kilobot, \textcolor{keywordtype}{int} pathLimit = 0);}
+\DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00035}00035         \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_simple_tracker_a326da268d437df3fbac9edf9006d3ef0}{processKilobot}}(\mbox{\hyperlink{structkilolib_1_1_kilobot}{Kilobot_detection_library::Kilobot}} \&kilobot, \textcolor{keywordtype}{int} pathLimit = 0);}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00036}00036 }
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00037}00037         \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_simple_tracker_a430c7cd6ec8cb7fb3f166ccadacbfa75}{increaseRTL}}(\textcolor{keywordtype}{int} maxRTL = 5);}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00038}00038 }
-\DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00039}00039         \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_simple_tracker_a5ecaf2fb99423c5e95607bd046254511}{processKilobots}}(std::vector<kilolib::Kilobot> \&input);}
+\DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00039}00039         \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_simple_tracker_a5ecaf2fb99423c5e95607bd046254511}{processKilobots}}(std::vector<Kilobot_detection_library::Kilobot> \&input);}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00040}00040 }
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00041}00041 }
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00042}00042         \textcolor{keywordtype}{void} \mbox{\hyperlink{classkilolib_1_1_simple_tracker_abd501707de16eae3a0d2c3499359a9aa}{drawKilobots}}(cv::Mat frame);}
@@ -49,7 +49,7 @@
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00045}00045 }
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00046}00046 }
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00047}00047     \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00048}00048         std::list<std::tuple<int, std::shared\_ptr<kilolib::Kilobot>, std::deque<Point>>> kilobots;}
+\DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00048}00048         std::list<std::tuple<int, std::shared\_ptr<Kilobot_detection_library::Kilobot>, std::deque<Point>>> kilobots;}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00049}00049         \textcolor{keywordtype}{int} lastID = 0;}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00050}00050     \};}
 \DoxyCodeLine{\Hypertarget{simpletracker_8h_source_l00051}00051 \}}

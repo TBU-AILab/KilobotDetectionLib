@@ -3,7 +3,7 @@
 //
 
 #include "simpletracker.h"
-namespace kilolib {
+namespace Kilobot_detection_library {
 
 
     void SimpleTracker::increaseRTL(int maxRTL) {
@@ -17,7 +17,7 @@ namespace kilolib {
         });
     }
 
-    void SimpleTracker::processKilobots(std::vector<kilolib::Kilobot> &input) {
+    void SimpleTracker::processKilobots(std::vector<Kilobot_detection_library::Kilobot> &input) {
         for (auto &k: input) {
             processKilobot(k);
         }
@@ -50,7 +50,7 @@ namespace kilolib {
 
     }
 
-    void SimpleTracker::processKilobot(kilolib::Kilobot &kilobot, int pathLimit) {
+    void SimpleTracker::processKilobot(Kilobot_detection_library::Kilobot &kilobot, int pathLimit) {
         bool found = false;
         for (auto &[rtl, k, path]: kilobots) {
             auto diff = k->box & kilobot.box;
@@ -72,7 +72,7 @@ namespace kilolib {
             kilobot.id = lastID++;
             std::deque<Point> path;
             path.push_back(kilobot.center());
-            kilobots.emplace_back(0, std::make_shared<kilolib::Kilobot>(kilobot), path);
+            kilobots.emplace_back(0, std::make_shared<Kilobot_detection_library::Kilobot>(kilobot), path);
         }
     }
 }

@@ -12,7 +12,7 @@
 
 using namespace cv;
 
-namespace kilolib {
+namespace Kilobot_detection_library {
 
     struct Kilobot
     {

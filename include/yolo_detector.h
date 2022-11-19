@@ -20,7 +20,7 @@
 static const int INPUT_WIDTH = 640;
 static const int INPUT_HEIGHT = 640;
 
-namespace kilolib {
+namespace Kilobot_detection_library {
 
     /**
      * @brief Result data type for functions from YoloDetector class

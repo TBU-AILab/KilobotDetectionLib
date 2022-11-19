@@ -13,7 +13,7 @@
 #include "kilobot.h"
 #include "opencv2/opencv.hpp"
 
-namespace kilolib {
+namespace Kilobot_detection_library {
 
     const std::array<cv::Scalar, 11> colors = {
             cv::Scalar({255, 204, 153}),
@@ -32,11 +32,11 @@ namespace kilolib {
 
     class SimpleTracker {
     public:
-        void processKilobot(kilolib::Kilobot &kilobot, int pathLimit = 0);
+        void processKilobot(Kilobot_detection_library::Kilobot &kilobot, int pathLimit = 0);
 
         void increaseRTL(int maxRTL = 5);
 
-        void processKilobots(std::vector<kilolib::Kilobot> &input);
+        void processKilobots(std::vector<Kilobot_detection_library::Kilobot> &input);
 
 
         void drawKilobots(cv::Mat frame);
@@ -45,7 +45,7 @@ namespace kilolib {
 
 
     private:
-        std::list<std::tuple<int, std::shared_ptr<kilolib::Kilobot>, std::deque<Point>>> kilobots;
+        std::list<std::tuple<int, std::shared_ptr<Kilobot_detection_library::Kilobot>, std::deque<Point>>> kilobots;
         int lastID = 0;
     };
 }

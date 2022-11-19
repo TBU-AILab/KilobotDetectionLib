@@ -7,7 +7,7 @@
 using namespace cv;
 using namespace std;
 
-namespace kilolib {
+namespace Kilobot_detection_library {
 
     bool CalculatePoints(string folderPath, string suffix, int cbWidth, int cbHeight,
         vector<vector<Point3f>>& objPoints, vector<vector<Point2f>>& imgPoints, Size& size) {
